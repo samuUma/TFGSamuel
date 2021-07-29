@@ -1,0 +1,26 @@
+<h1>Resultados de la búsqueda: <small>{{termino}}</small></h1>
+
+
+<div class="row animated fadeIn fast" *ngIf="pacientes.length==0">
+  <div class="col-md-12">
+    <div class="alert alert-info" role="alert">
+      No existen resultados con el término: {{termino}}
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 animated fadeIn fast">
+    <div class="col"  *ngFor="let paciente of pacientes;">
+      <div class="card h-100 ">
+        <div class="card-body">
+          <h5 class="card-title">{{paciente.first_name}} {{ paciente.last_name}}</h5>
+          <p class="card-text">{{paciente.birthdate}}</p>
+          <p class="card-text">{{paciente.sex}}</p>
+        </div>
+        <div class="card-footer">
+          <button  type="button" (click)="verPaciente(paciente.id)"  class="btn btn-outline-primary">Más información</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>

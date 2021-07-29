@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="../../../../assets/Flag_of_the_Red_Cross.png" alt="" width="30" height="24">
+        </a>
+      <a class="navbar-brand" >Menú Principal</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0"  *ngIf="estaslogeado()==true">
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" aria-current="page" [routerLink]="['pacientes']">Pacientes</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" [routerLink]="['estadisticas']">Estadísticas</a>
+          </li>
+          <li class="nav-item" routerLinkActive="active" *ngIf="estaslogeado()==true">
+            <button (click)="agregarPaciente()" class="btn btn-outline-info" type="button">Añadir paciente</button>
+          </li> 
+          &nbsp;
+          <li class="nav-item" routerLinkActive="active" *ngIf="estaslogeado()==true">
+            <button (click)="cerrarSesion()" class="btn btn-outline-danger" type="button">Cerrar Sesión</button>
+          </li>              
+        </ul>
+        <form class="d-flex"  *ngIf="estaslogeado()==true">
+          <input  #buscarTexto class="form-control me-2" type="search" placeholder="Buscar pacientes" (keyup.enter)="buscarPaciente(buscarTexto.value)">
+          <button (click)="buscarPaciente(buscarTexto.value)" class="btn btn-outline-success" type="button">Buscar</button>
+        </form>
+      </div>
+    </div>
+  </nav>

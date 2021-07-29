@@ -1,0 +1,126 @@
+
+<h4>Información básica</h4>
+<hr>
+<form autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm">
+
+  <div>
+
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Nombre:</label>
+      <div class="col-8">
+        <input class="form-control"
+               type="text"
+               name="nombre"
+               [class.is-invalid]="nombre.invalid && nombre.touched"
+               [ngModel]="paciente.first_name"
+               placeholder="Nombre"
+               required
+               minlength="3"
+               #nombre="ngModel">
+               <small *ngIf="nombre.invalid && nombre.touched" class="form-text text-danger">El nombre es obligatorio</small>
+      </div>
+    </div>
+    <br>
+    <div class="form-group row">
+      <label class="col-2 col-form-label">Apellidos:</label>
+      <div class="col-8">
+        <input class="form-control"
+               type="text"
+               name="apellidos"
+               [class.is-invalid]="apellidos.invalid && apellidos.touched"
+               [ngModel]="paciente.last_name"
+               placeholder="Apellidos"
+               required
+               minlength="3"
+               #apellidos="ngModel">
+               <small *ngIf="apellidos.invalid && apellidos.touched" class="form-text text-danger">Los apellidos es obligatorio</small>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Fecha de nacimiento:</label>
+    <div class="col-8">
+      <input class="form-control"
+             type="date"
+             name="fecha"
+             [class.is-invalid]="fecha.invalid && fecha.touched"
+             [ngModel]="paciente.birthdate"
+             placeholder="Fecha de nacimiento" 
+             required
+             #fecha="ngModel">
+             <small *ngIf="fecha.invalid && fecha.touched" class="form-text text-danger">La fecha es obligatoria</small>
+    </div>
+  </div>
+  <br>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Sexo:</label>
+    <div class="col-8">
+        <select class="form-select"  [ngModel]="paciente.sex" name="sexo" #sexo="ngModel" required
+        [class.is-invalid]="sexo.invalid && sexo.touched">
+            <option value="" disabled selected>Seleccione una opción</option>
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+          </select>
+          <small *ngIf="sexo.invalid && sexo.touched" class="form-text text-danger">El sexo es obligatorio</small>
+    </div>
+  </div>
+  <br>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Semanas de gestación:</label>
+    <div class="col-8">
+        <select class="form-select"  [ngModel]="paciente.pregnancy_period" name="semanas_gestacion" 
+        #semanas_gestacion="ngModel" required [class.is-invalid]="semanas_gestacion.invalid && semanas_gestacion.touched">
+            <option value="23" selected="true">23</option>
+            <option value="24">24</option>
+            <option value="25">25</option>
+            <option value="26">26</option>
+            <option value="27">27</option>
+            <option value="28">28</option>
+            <option value="29">29</option>
+            <option value="30">30</option>
+            <option value="31">31</option>
+            <option value="32">32</option>
+            <option value="33">33</option>
+            <option value="34">34</option>
+            <option value="35">35</option>
+            <option value="36">36</option>
+            <option value="37">37</option>
+            <option value="38">38</option>
+        </select>
+        <small *ngIf="semanas_gestacion.invalid && semanas_gestacion.touched" class="form-text text-danger">Semanas de gestación es obligatorio</small>
+    </div>
+  </div>
+  <br>
+  <div class="form-group row">
+    <label class="col-2 col-form-label">Peso al nacer:</label>
+    <div class="col-8">
+      <input class="form-control"
+             type="number"
+             placeholder="Peso al nacer"
+             min="500"
+             max="3000"
+             step="5"
+             value="1500"  [ngModel]="paciente.weight" #peso="ngModel" name="peso" required
+             [class.is-invalid]="peso.invalid && peso.touched" onKeyDown="return false">
+             <small *ngIf="peso.invalid && peso.touched" class="form-text text-danger">Peso es obligatorio</small>
+             
+    </div>
+  </div>
+  
+
+
+  <div class="form-group row">
+    <label class="col-2 col-form-label">&nbsp;</label>
+    <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary btn-block">
+        Guardar
+      </button>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
+    </div>
+  </div>
+
+</form>

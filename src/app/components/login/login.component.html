@@ -1,0 +1,23 @@
+<form (ngSubmit)="onSubmit(formulario)" #formulario="ngForm" *ngIf="estaslogeado()==false">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Correo Electrónico</label>
+      <input  name="email" [(ngModel)]="usuario.email" required email type="email" placeholder="name@example.com" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      <span *ngIf="formulario.submitted && formulario.controls['email'].errors" class="text-danger animated fadeIn">Correo no válido</span>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+      <input name="password" [(ngModel)]="usuario.password" required minlength="8" type="password" placeholder="contraseña" class="form-control" id="exampleInputPassword1">
+      <span *ngIf="formulario.submitted && formulario.controls['password'].errors" class="text-danger animated fadeIn">Contraseña no válida</span>
+    </div>
+      <!--
+        <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Recordar mi usuario</label>
+        </div>
+      -->
+      
+    
+    
+    <button type="submit" class="btn btn-primary">Ingresar</button>
+  </form>
+

@@ -1,0 +1,84 @@
+
+<h4>Requisitos básicos para iniciar el protocolo alimenticio</h4>
+<hr>
+<form autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm">
+
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" 
+        value="" 
+        id="estabilidadHemodinamica" required 
+        name="estabilidadHemodinamica"
+        [ngModel]="protocolo.estabilidadHemodinamica"
+        #estabilidadHemodinamica="ngModel">
+        <label class="form-check-label" for="estabilidadHemodinamica">
+            ¿Estabilidad hemodinámica? (presión sanguínea y frecuencia cardíaca normales)
+        </label>
+    </div>
+
+    <br>
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" 
+        id="perfusion12horas" required 
+        name="perfusion12horas"
+        #perfusion12horas="ngModel"
+        [ngModel]="protocolo.perfusion12horas">
+        <label class="form-check-label" for="perfusion12horas">
+            ¿Perfusión estable durante las últimas 12 horas?
+        </label>
+    </div>
+
+    <br>
+
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" 
+        id="sinAsfixia" required 
+        name="sinAsfixia"
+        #sinAsfixia="ngModel"
+        [ngModel]="protocolo.sinAsfixia">
+        <label class="form-check-label" for="sinAsfixia">
+            ¿Presenta asfixia?
+        </label>
+    </div>
+
+  <br>
+
+  <div class="form-check">
+        <input class="form-check-input" type="checkbox" 
+        id="pesoOSemanasAdecuado" required 
+        name="pesoOSemanasAdecuado"
+        #pesoOSemanasAdecuado="ngModel"
+        [(ngModel)]="protocolo.pesoOSemanasAdecuado">
+        <label class="form-check-label" for="pesoOSemanasAdecuado">
+            ¿Peso inferior a los 1500 gramos o menos de 32 semanas?
+        </label>
+    </div>
+
+  <br>
+
+  <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" 
+        id="calostroOLmDisponible" required 
+        name="calostroOLmDisponible"
+        #calostroOLmDisponible="ngModel"
+        [ngModel]="protocolo.calostroOLmDisponible">
+        <label class="form-check-label" for="calostroOLmDisponible">
+        ¿Calostro o leche materna disponible?
+        </label>
+    </div>
+
+  <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-8">
+      <button type="submit" class="btn btn-outline-primary btn-block">
+        Guardar
+      </button>
+      &nbsp;
+      &nbsp;
+      &nbsp;
+      <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
+    </div>
+  </div>
+
+</form>

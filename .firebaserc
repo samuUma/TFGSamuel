@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "app-angular-tutorial": {
+      "hosting": {
+        "app-tutorial-angular": [
+          "app-angular-tutorial"
+        ]
+      }
+    }
+  }
+}
