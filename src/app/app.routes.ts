@@ -26,6 +26,7 @@ const APP_ROUTES: Routes = [
     { path: 'agregarPaciente', component: AgregarPacienteComponent, canActivate: [AuthGuard]},
     { path: 'editarPaciente/:id', component: EditarPacienteComponent, canActivate: [AuthGuard]},
     { path: 'iniciarProtocolo/:id', component: IniciarProtocoloComponent, canActivate: [AuthGuard]},
+    { path: 'paciente/:id/:pesoOSemanasAdecuado/:calostroOLmDisponible', component:PacienteComponent, canActivate: [AuthGuard]},
     { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];
 

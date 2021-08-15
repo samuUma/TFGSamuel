@@ -15,7 +15,6 @@ export class PacienteComponent {
   paciente:paciente;
   id:string;
   cargando:boolean=false;
-  protocolo_establecido:boolean=false;
 
   constructor(private activatedRoute: ActivatedRoute,
               private _pacientesService: PacientesService,
@@ -28,6 +27,7 @@ export class PacienteComponent {
   }
 
   ngOnInit(): void {
+    this.paciente=new paciente();
     this.cargando=true;
     this._pacientesService.getPacientes2()
     .subscribe(resp => {

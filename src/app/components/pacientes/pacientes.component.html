@@ -8,6 +8,13 @@
         Espere por favor
       </p>
     </div>
+    <div *ngIf="!cargando && pacientes.length==0"
+     class="alert alert-warning text-center mt-3 animated fadeIn faster">
+    <h4 class="alert-heading">No hay registros</h4>
+    <p>
+      <i class="fa fa-exclamation fa-2x"></i>
+    </p>
+    </div>
     <div class="col"  *ngFor="let paciente of pacientes">
       <div class="card h-100 ">
         <div class="card-body">
@@ -28,7 +35,7 @@
           <button  type="button" (click)="borrarPaciente(paciente.id)"  class="btn btn-outline-danger">Borrar paciente</button>
           &nbsp;
           &nbsp;
-          <button  type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
+          <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
         </div>
       </div>
     </div>

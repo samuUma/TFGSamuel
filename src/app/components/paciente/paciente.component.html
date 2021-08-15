@@ -1,12 +1,12 @@
 <div class="card border-light mb-3 animated fadeIn fast" style="max-width: 18rem;">
-    <h5 class="card-header">{{paciente.first_name}} {{paciente.last_name}}</h5>
+    <h5 class="card-header">{{paciente?.first_name}} {{paciente?.last_name}}</h5>
     <div class="card-body">
-      <p class="card-text">Fecha de nacimiento: {{paciente.birthdate}}</p>
-      <p class="card-text">Sexo: {{paciente.sex}}</p>
-      <p class="card-text">Semanas de gestación: {{paciente.pregnancy_period}} semanas</p>
-      <p class="card-text">Peso al nacer: {{paciente.weight}} g</p>
-    <button  *ngIf="protocolo_establecido==true" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
-    <button  *ngIf="protocolo_establecido==false" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo alimentario</button>
+      <p class="card-text">Fecha de nacimiento: {{paciente?.birthdate}}</p>
+      <p class="card-text">Sexo: {{paciente?.sex}}</p>
+      <p class="card-text">Semanas de gestación: {{paciente?.pregnancy_period}} semanas</p>
+      <p class="card-text">Peso al nacer: {{paciente?.weight}} g</p>
+    <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
+    <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo alimentario</button>
   </div>
   <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
   </div>

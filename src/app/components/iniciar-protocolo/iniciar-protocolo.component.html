@@ -10,10 +10,13 @@
         id="estabilidadHemodinamica" required 
         name="estabilidadHemodinamica"
         [ngModel]="protocolo.estabilidadHemodinamica"
-        #estabilidadHemodinamica="ngModel">
+        #estabilidadHemodinamica="ngModel"
+        [class.is-invalid]="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched">
         <label class="form-check-label" for="estabilidadHemodinamica">
             ¿Estabilidad hemodinámica? (presión sanguínea y frecuencia cardíaca normales)
         </label>
+        <br>
+        <small *ngIf="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched" class="form-text text-danger">Este campo es obligatorio</small>
     </div>
 
     <br>
@@ -23,10 +26,13 @@
         id="perfusion12horas" required 
         name="perfusion12horas"
         #perfusion12horas="ngModel"
-        [ngModel]="protocolo.perfusion12horas">
+        [ngModel]="protocolo.perfusion12horas"
+        [class.is-invalid]="perfusion12horas.invalid && perfusion12horas.touched">
         <label class="form-check-label" for="perfusion12horas">
             ¿Perfusión estable durante las últimas 12 horas?
         </label>
+        <br>
+        <small *ngIf="perfusion12horas.invalid && perfusion12horas.touched" class="form-text text-danger">Este campo es obligatorio</small>
     </div>
 
     <br>
@@ -36,37 +42,64 @@
         id="sinAsfixia" required 
         name="sinAsfixia"
         #sinAsfixia="ngModel"
-        [ngModel]="protocolo.sinAsfixia">
+        [ngModel]="protocolo.sinAsfixia"
+        [class.is-invalid]="sinAsfixia.invalid && sinAsfixia.touched">
         <label class="form-check-label" for="sinAsfixia">
-            ¿Presenta asfixia?
+            ¿Ausencia de asfixia?
         </label>
+        <br>
+        <small *ngIf="sinAsfixia.invalid && sinAsfixia.touched" class="form-text text-danger">Este campo es obligatorio</small>
     </div>
 
   <br>
 
   <div class="form-check">
         <input class="form-check-input" type="checkbox" 
-        id="pesoOSemanasAdecuado" required 
+        id="pesoOSemanasAdecuado"  
         name="pesoOSemanasAdecuado"
         #pesoOSemanasAdecuado="ngModel"
         [(ngModel)]="protocolo.pesoOSemanasAdecuado">
         <label class="form-check-label" for="pesoOSemanasAdecuado">
             ¿Peso inferior a los 1500 gramos o menos de 32 semanas?
         </label>
+        &nbsp;
+        <label>  (Peso del paciente: {{paciente?.weight}} g, Semanas del paciente: {{paciente?.pregnancy_period}} semanas)</label>
     </div>
 
   <br>
 
   <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" 
-        id="calostroOLmDisponible" required 
+        id="calostroOLmDisponible"  
         name="calostroOLmDisponible"
         #calostroOLmDisponible="ngModel"
         [ngModel]="protocolo.calostroOLmDisponible">
         <label class="form-check-label" for="calostroOLmDisponible">
         ¿Calostro o leche materna disponible?
         </label>
-    </div>
+  </div>
+
+  <br>
+
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value=""
+    id="cir"
+    name="cir"
+    #cir="ngModel"
+    [ngModel]="protocolo.cir">
+    <label class="form-check-label" for="cir">¿Crecimiento intrauterino retardado? (CIR)</label>
+  </div>
+
+  <br>
+
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value=""
+    id="cateter"
+    name="cateter"
+    #cir="ngModel"
+    [ngModel]="protocolo.cateter">
+    <label class="form-check-label" for="cateter">¿Catéter umbilical?</label>
+  </div>
 
   <div class="form-group row">
         <label class="col-2 col-form-label">&nbsp;</label>
@@ -77,7 +110,7 @@
       &nbsp;
       &nbsp;
       &nbsp;
-      <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
+      <button  type="button" (click)="verPaciente(paciente.id)"  class="btn btn-outline-primary">Atrás</button>
     </div>
   </div>
 

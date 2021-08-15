@@ -159,7 +159,7 @@ export class CalendarioComponent implements OnInit {
   verPaciente(idx:string): void{
     this.router.navigate(['/paciente',idx]);
     //console.log(idx);
-}
+  }
 
 }
 

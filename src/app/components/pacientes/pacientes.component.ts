@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {paciente, PacientesService} from '../../services/pacientes.service' 
-import MOCK_DATA from '../../../assets/MOCK_DATA.json';
 import {Router} from '@angular/router'
 import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-pacientes',
@@ -25,7 +25,11 @@ export class PacientesComponent implements OnInit {
     .subscribe( resp => {
       this.pacientes=resp;
       this.cargando=false;
+      for(var pa of this.pacientes){
+        console.log('nombre:',pa.first_name,'protocolo:',pa.protocol)
+      }
     });
+    
   
   }
 

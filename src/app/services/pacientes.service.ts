@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class PacientesService{
     
+    
     private url ='https://app-angular-tutorial-default-rtdb.europe-west1.firebasedatabase.app/';
     private pacientes:paciente[];
 
@@ -73,6 +74,7 @@ export class PacientesService{
 
     crearPaciente(paciente:paciente){
         console.log('paciente ingresado con exito',`${this.url}.json`,paciente);
+        paciente.protocol=false;
         console.log('el paciente es:',paciente)
         return this.http.post(`${this.url}.json`,paciente)
         .pipe(
@@ -97,6 +99,9 @@ export class PacientesService{
         return this.http.put(`${this.url}/${paciente.id}.json`,pacienteTemp);
       }
 
+    actualizarProtocolo(paciente:paciente){
+        paciente.protocol=true;
+    }
     /*
     getGender(i: string): string {
         for(var index in this.pacientes){
@@ -116,5 +121,6 @@ export class paciente{
     birthdate:string;
     sex:string;
     pregnancy_period:number;
-    weight:number
+    weight:number;
+    protocol:boolean
 }

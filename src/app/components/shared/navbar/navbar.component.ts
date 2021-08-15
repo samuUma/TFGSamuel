@@ -27,9 +27,15 @@ export class NavbarComponent implements OnInit {
   }
 
   cerrarSesion():void{
-    this.auth.logout();
-    this.router.navigateByUrl('/login');
-    Swal.fire({title:'Sesión cerrada',icon:'info'});
+    Swal.fire({title:'¿Estás seguro?',icon:'info',showConfirmButton:true,showCancelButton:true})
+    .then(  resp =>{
+      if(resp.value){
+        this.auth.logout();
+        this.router.navigateByUrl('/login');
+        Swal.fire({title:'Sesión cerrada',icon:'info'});
+      } 
+    })
+    
   }
 
   agregarPaciente(): void{
