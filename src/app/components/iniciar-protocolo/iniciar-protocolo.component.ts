@@ -115,6 +115,7 @@ export class IniciarProtocoloComponent implements OnInit {
 
   }
 
+  
   terminarFormulario2():void{
     this._pacientesService.actualizarProtocolo(this.paciente);
         this._pacientesService.actualizarPaciente(this.paciente)
