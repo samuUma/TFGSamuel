@@ -1,10 +1,19 @@
 <!-- full-calendar para agregar el calendario -->
-<full-calendar [options]="calendarOptions"></full-calendar>
+<!-- [options]="calendarOptions" -->
+<div *ngIf="cargando" class="alert alert-info text-center mt-3">
+  <h4 class="alert-heading">Cargando</h4>
+  <p>
+    <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+  </p>
+  <p class="mb-0">
+    Espere por favor
+  </p>
+</div>
+<div class="outer" style="width:107%;">
+  <full-calendar *ngIf="!cargando" id="calendario" [options]="calendarOptions"></full-calendar>
+</div>
+
 <div class="card-footer animated fadeIn fast">
-    <button  type="button" (click)="verPaciente(paciente.id)"  class="btn btn-outline-primary">Atrás</button>
+  <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
   </div>
-<!-- boton para ocultar fin de semana-->
-<!-- 
-<button  type="button" (click)="toggleWeekends()"  class="btn btn-outline-primary">Activar Fin de semana</button>
- -->
 

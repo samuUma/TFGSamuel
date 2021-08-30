@@ -34,6 +34,9 @@ import { AgregarPacienteComponent } from './components/agregar-paciente/agregar-
 import { EditarPacienteComponent } from './components/editar-paciente/editar-paciente.component';
 import { IniciarProtocoloComponent } from './components/iniciar-protocolo/iniciar-protocolo.component';
 
+//graficas
+import { NgxEchartsModule } from 'ngx-echarts';
+
 //calendario-------------------
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -68,7 +71,11 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FormsModule,
     HttpClientModule,
     //calendario
-    FullCalendarModule
+    FullCalendarModule,
+    //graficas
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   providers: [
     PacientesService,

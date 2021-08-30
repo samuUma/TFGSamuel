@@ -2,8 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http';
 import { PacienteComponent } from '../components/paciente/paciente.component';
-import { Observable } from 'rxjs';
+import { config, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { InicioProtocolo } from '../components/iniciar-protocolo/iniciar-protocolo.component';
+import { AngularFirestore } from '@angular/fire/firestore';
+import firebase from 'firebase';
 
 @Injectable()
 export class PacientesService{
@@ -11,22 +14,33 @@ export class PacientesService{
     
     private url ='https://app-angular-tutorial-default-rtdb.europe-west1.firebasedatabase.app/';
     private pacientes:paciente[];
-
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    firebaseConfig = {
+      apiKey: "AIzaSyBtC6Ujqymj6wEjLtCqOO-snXtXOdgzeM4",
+      authDomain: "app-angular-tutorial.firebaseapp.com",
+      databaseURL: "https://app-angular-tutorial-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "app-angular-tutorial",
+      storageBucket: "app-angular-tutorial.appspot.com",
+      messagingSenderId: "57704641855",
+      appId: "1:57704641855:web:6e203d4008024b18cf4f8a",
+      measurementId: "G-V0JCXG24H5"
+    };
     constructor(private router:Router,private http: HttpClient){
     
     }
-
+    
     getPacientes(){
         return this.pacientes;
     }
 
     ngOnInit(): void {
+    
         this.getPacientes2()
         .subscribe(resp => {
           console.log('pacientes servicio:',resp);
           this.pacientes=resp;
         });
-      }
+    }
 
     getPacientes2(){
         return this.http.get(`${this.url}.json`)
@@ -48,17 +62,6 @@ export class PacientesService{
         })
         return pacientes;
     }
-
-    /*
-    getPaciente( idx: number): paciente{
-        //return this.pacientes[idx];
-        for(var index in this.pacientes){
-            if(this.pacientes[index].id == idx){
-                return this.pacientes[index];
-            }
-        }
-    }
-    */
 
     buscarPacientes(termino:string):paciente[]{
         let tempPacients:paciente[]=[];
@@ -85,7 +88,6 @@ export class PacientesService{
           );
     }
 
-    
     borrarPaciente(idx: string) {
         return this.http.delete(`${this.url}/${idx}.json`);
       }
@@ -98,19 +100,15 @@ export class PacientesService{
         delete pacienteTemp.id;
         return this.http.put(`${this.url}/${paciente.id}.json`,pacienteTemp);
       }
-
-    actualizarProtocolo(paciente:paciente){
-        paciente.protocol=true;
-    }
-    /*
+    
     getGender(i: string): string {
         for(var index in this.pacientes){
             if(this.pacientes[index].id == i){
-                return this.pacientes[index];
+                return this.pacientes[index].sex;
             }
         }
       }
-    */
+    
 
 }
 
@@ -122,5 +120,6 @@ export class paciente{
     sex:string;
     pregnancy_period:number;
     weight:number;
-    protocol:boolean
+    protocol:boolean=false;
+    protocolo:InicioProtocolo
 }

@@ -61,3 +61,14 @@ card-footer,
     border-color: rgba(160, 175, 185, .15);
     background-clip: padding-box
 }
+
+.chart-container {
+    float:left;
+    padding-left: 100px;
+    padding-right: 10px;
+}
+
+.spectre-line-chart {
+    float: left;
+}
+

@@ -27,8 +27,10 @@ export class NavbarComponent implements OnInit {
   }
 
   cerrarSesion():void{
-    Swal.fire({title:'¿Estás seguro?',icon:'info',showConfirmButton:true,showCancelButton:true})
+    Swal.fire({title:'¿Cerrar sesión?',icon:'info',showConfirmButton:true,showCancelButton:true,cancelButtonText:'Cancelar',
+    cancelButtonColor: '#d33',})
     .then(  resp =>{
+      console.log('esto es pa salir',resp)
       if(resp.value){
         this.auth.logout();
         this.router.navigateByUrl('/login');

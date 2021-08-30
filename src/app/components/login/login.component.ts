@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   usuario:UsuarioModel
+  
   constructor(private auth:AuthService,private router:Router) { }
 
   ngOnInit(): void {
@@ -42,5 +43,7 @@ export class LoginComponent implements OnInit {
       Swal.fire('Correo o contraseña no válidos','','error');
     });
   }
+
+  
 
 }

@@ -14,6 +14,7 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class IniciarProtocoloComponent implements OnInit {
 
+  
   pacientes:paciente[]=[];
   paciente:paciente;
   protocolo:InicioProtocolo;
@@ -107,6 +108,11 @@ export class IniciarProtocoloComponent implements OnInit {
       this.alarma=true;
     }
 
+    //this.protocolo.fechaInicio=new Date().toISOString()
+    this.protocolo.fechaInicio=new Date().toLocaleDateString()
+    this.protocolo.acortarProtocolo=false;
+    console.log('que pasa protocolo',this.valoresProtocolo(this.protocolo))
+    this.paciente.protocolo=this.protocolo;
     if(this.alarma){
       this.terminarFormulario(this.atencion,this.textos)
     }else{
@@ -117,27 +123,29 @@ export class IniciarProtocoloComponent implements OnInit {
 
   
   terminarFormulario2():void{
-    this._pacientesService.actualizarProtocolo(this.paciente);
-        this._pacientesService.actualizarPaciente(this.paciente)
+    this.paciente.protocol=true;
+    this._pacientesService.actualizarPaciente(this.paciente)
         .subscribe(resp => {
         });
-        this.ngOnInit();
         this.router.navigateByUrl('/home');
+        this.ngOnInit();
       Swal.fire({title:'Protocolo iniciado con éxito',icon:'info'});
   }
 
   terminarFormulario(titulo:string,textos:string[]): void{
 
     Swal.fire({title:titulo,html:textos.join('<br>'),
-      icon:'info',showConfirmButton:true,showCancelButton:true})
+      icon:'info',showConfirmButton:true,showCancelButton:true,
+      cancelButtonText:'Cancelar',
+      cancelButtonColor: '#d33',})
      .then(  resp =>{
      if(resp.value){
-       this._pacientesService.actualizarProtocolo(this.paciente);
+      this.paciente.protocol=true;
        this._pacientesService.actualizarPaciente(this.paciente)
        .subscribe(resp => {
        });
-       this.ngOnInit();
        this.router.navigateByUrl('/home');
+       this.ngOnInit();
        Swal.fire({title:'Protocolo iniciado con éxito',icon:'info'});
      } 
    })
@@ -155,16 +163,34 @@ export class IniciarProtocoloComponent implements OnInit {
     this.router.navigate(['/paciente',idx]);
     //console.log(idx);
   }
+
+  valoresProtocolo(proto:InicioProtocolo): string[] {
+    var valoresTemp = new Array();
+    valoresTemp.push(String(proto.estabilidadHemodinamica))
+    valoresTemp.push(String(proto.perfusion12horas))
+    valoresTemp.push(String(proto.sinAsfixia))
+    valoresTemp.push(String(proto.pesoOSemanasAdecuado))
+    valoresTemp.push(String(proto.calostroOLmDisponible))
+    valoresTemp.push(String(proto.cir))
+    valoresTemp.push(String(proto.cateter))
+    valoresTemp.push(String(proto.fechaInicio))
+    return valoresTemp;
+  }
   
 }
 
 export class InicioProtocolo{
-
   estabilidadHemodinamica:boolean;
   perfusion12horas:boolean;
   sinAsfixia:boolean;
   pesoOSemanasAdecuado:boolean;
   calostroOLmDisponible:boolean;
   cir:boolean;
-  cateter:boolean
+  cateter:boolean;
+  fechaInicio:string;
+  acortarProtocolo:boolean;
+  tomas=[{titulo:'inicio',fecha:'fecha inicial',deposicionesNormales:'inicio',vomitos:'inicio',abdomenNormal:'inicio'}]
 }
+
+
+

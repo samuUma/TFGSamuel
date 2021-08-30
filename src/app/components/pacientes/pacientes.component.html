@@ -36,6 +36,8 @@
           &nbsp;
           &nbsp;
           <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
+          <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo</button>
         </div>
       </div>
     </div>
+    

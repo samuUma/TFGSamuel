@@ -16,7 +16,7 @@ export class PacientesComponent implements OnInit {
 
   constructor(private _pacientesService:PacientesService,
               private router:Router) { 
-    console.log("constructor");
+    //console.log("constructor");
   }
 
   ngOnInit(): void {
@@ -51,7 +51,8 @@ mostrarCargando(){
 }
 
 borrarPaciente(idx:string): void{
-  Swal.fire({title:'¿Estás seguro?',icon:'info',showConfirmButton:true,showCancelButton:true})
+  Swal.fire({title:'¿Borrar Paciente?',icon:'info',showConfirmButton:true,showCancelButton:true,cancelButtonText:'Cancelar',
+  cancelButtonColor: '#d33',})
   .then( resp => {
     if ( resp.value ) {
       var contador=0;
@@ -73,5 +74,8 @@ verCalendario(idx:string): void{
   //console.log(idx);
 }
 
+iniciarProtocolo(idx:string): void{
+  this.router.navigate(['/iniciarProtocolo',idx]);
+}
 
 }

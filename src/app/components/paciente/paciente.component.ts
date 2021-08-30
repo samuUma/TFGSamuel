@@ -9,12 +9,13 @@ import Swal from 'sweetalert2';
   templateUrl: './paciente.component.html'
   
 })
-export class PacienteComponent {
+export class PacienteComponent implements OnInit {
 
   pacientes:paciente[]=[];
   paciente:paciente;
   id:string;
   cargando:boolean=false;
+  protocoloCargado:boolean;
 
   constructor(private activatedRoute: ActivatedRoute,
               private _pacientesService: PacientesService,
@@ -24,6 +25,10 @@ export class PacienteComponent {
       console.log('parametro:',params['id']);
       this.id=params['id'];
     })
+  }
+
+  cargarProtocolo(){
+    this.protocoloCargado=this.paciente.protocol;
   }
 
   ngOnInit(): void {
@@ -38,7 +43,10 @@ export class PacienteComponent {
         }
       }
       this.cargando=false;
+      console.log('esto es paciente',this.paciente)
+      console.log('esto es su protocolo',this.paciente.protocol)
     });
+    this.cargarProtocolo()
   }
 
 verCalendario(idx:string): void{
@@ -49,6 +57,30 @@ verCalendario(idx:string): void{
 iniciarProtocolo(idx:string): void{
     this.router.navigate(['/iniciarProtocolo',idx]);
 }
+
+editarPaciente(idx:string): void{
+  this.router.navigate(['/editarPaciente',idx]);
+}
+
+borrarPaciente(idx:string): void{
+  Swal.fire({title:'¿Borrar Paciente?',icon:'info',showConfirmButton:true,showCancelButton:true,cancelButtonText:'Cancelar',
+  cancelButtonColor: '#d33',})
+  .then( resp => {
+    if ( resp.value ) {
+      var contador=0;
+        for(var i of this.pacientes){
+            if(i.id==idx){
+              this.pacientes.splice(contador,1);
+            }else{
+                contador++;
+            }
+          }
+      this._pacientesService.borrarPaciente(idx).subscribe();
+      this.router.navigate(['/pacientes',idx]);
+    }
+
+  });
+}
    
 mostrarCargando(){
   while(this.cargando==true){
@@ -57,7 +89,6 @@ mostrarCargando(){
     Swal.close();
   }
 }
-
   
 
 }
