@@ -27,8 +27,52 @@
       <p class="card-text">Sexo: {{paciente?.sex}}</p>
       <p class="card-text">Semanas de gestación: {{paciente?.pregnancy_period}} semanas</p>
       <p class="card-text">Peso al nacer: {{paciente?.weight}} g</p>
+      <p *ngIf="!this.paciente.protocol" class="card-text">Protocolo alimentario no iniciado</p>
       <p *ngIf="this.paciente.protocol" class="card-text">Fecha de inicio del protocolo: {{paciente?.protocolo?.fechaInicio}}</p>
+      <p *ngIf="this.paciente.protocolo.calostroOLmDisponible" class="card-text">Calostro disponible al iniciar el protocolo</p>
+      <p *ngIf="this.paciente.protocolo.cir" class="card-text">Paciente CIR</p>
+      <p *ngIf="this.paciente.protocolo.cateter" class="card-text">Presencia de catéter umbilical</p>
+      <div *ngIf="this.paciente.protocolo.tomas.length>1">
+        <p class="card-text">Evolución del paciente:</p>
+        <div class="col"  *ngFor="let toma of this.paciente.protocolo.tomas">
+          <div *ngIf="toma.titulo != 'inicio' ">
+              <div class="row">
+                <div class="column">
+                  <p class="card-text">{{toma.titulo}}, {{toma.fecha.split('T')[0]}} {{toma.fecha.split('T')[1].substring(0,5)}}</p>
+                </div>
+                <div class="column">
+                  <div *ngIf="toma.abdomenNormal">
+                    abdomen normal: Sí
+                  </div>
+                  <div *ngIf="!toma.abdomenNormal">
+                    abdomen normal: No
+                  </div>
+                </div>
+                <div class="column">
+                  <div *ngIf="toma.deposicionesNormales">
+                    Deposiciones normales: Sí
+                  </div>
+                  <div *ngIf="!toma.deposicionesNormales">
+                    Deposiciones normales: No
+                  </div>
+                </div>
+                <div class="column">
+                  <div *ngIf="toma.vomitos">
+                    Vómitos: Sí
+                  </div>
+                  <div *ngIf="!toma.vomitos">
+                    Vómitos: No
+                  </div>
+                </div>
+                <br><br>
+              </div>
+          </div>
+        </div>
+      </div>
       
+      
+
+    <br><br>
     <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
     <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo alimentario</button>
     &nbsp; &nbsp;
@@ -40,3 +84,18 @@
   </div>
   </div>
   
+
+<style>
+.column {
+  float: left;
+  width: 25%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+</style>

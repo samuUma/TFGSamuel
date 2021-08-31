@@ -121,5 +121,16 @@ export class paciente{
     pregnancy_period:number;
     weight:number;
     protocol:boolean=false;
-    protocolo:InicioProtocolo
+    protocolo:InicioProtocolo={
+        estabilidadHemodinamica: false,
+        perfusion12horas: false,
+        sinAsfixia: false,
+        pesoOSemanasAdecuado:false,
+        calostroOLmDisponible:false,
+        cir:false,
+        cateter:false,
+        fechaInicio:"",
+        acortarProtocolo:false,
+        tomas:[{titulo:'inicio',fecha:'fecha inicial',deposicionesNormales:'inicio',vomitos:'inicio',abdomenNormal:'inicio'}]
+    }
 }

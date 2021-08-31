@@ -16,16 +16,41 @@ export class EstadisticasComponent implements OnInit {
   cargando:boolean;
   pesos=[0,0,0,0]
   semanas=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  cir: number=0;
+  nocir: number=0;
+  cateter:number=0;
+  nocateter:number=0;
+  deposiciones:number=0;
+  vomitos:number=0;
+  abdomen:number=0;
+  dias:number=0;
   theme: string | ThemeOption;
   options1;
   options2;
   options3;
+  options4;
+  options5;
+  options6;
 
   initOpts = {
     renderer: 'svg',
     width: 300,
     height: 300
   };
+
+   CoolTheme = {
+    color: [
+      '#b21ab4',
+      '#6f0099',
+      '#2a2073',
+      '#0b5ea8',
+      '#17aecc',
+      '#b3b3ff',
+      '#eb99ff',
+      '#fae6ff',
+      '#e6f2ff',
+      '#eeeeee'
+    ]};
 
   constructor(private _pacientesService:PacientesService,
               private router:Router) { 
@@ -46,6 +71,9 @@ export class EstadisticasComponent implements OnInit {
       this.countGender()
       this.countPesos()
       this.countSemanas()
+      this.countCir()
+      this.countCateter()
+      this.countEvolucion()
       this.cargarGrafica()
     });
   }
@@ -152,6 +180,114 @@ export class EstadisticasComponent implements OnInit {
         data: this.semanas,
       }]
     };
+
+    this.options4 = {
+      title: {
+        text: 'Pacientes CIR',
+        //subtext: 'Mocking Data',
+        x: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+      },
+      
+      legend: {
+        x: 'center',
+        y: 'bottom',
+        data: ['CIR','No CIR']
+      },
+      calculable: true,
+      series: [
+        {
+          name: '',
+          type: 'pie',
+          radius: [30, 80],
+          roseType: 'area',
+          data: [
+            { value: this.cir, name: 'CIR' },
+            { value: this.nocir, name: 'No CIR' }
+          ]
+        }
+      ]
+    };
+
+    this.options5 = {
+      title: {
+        text: 'Pacientes con catéter umbilical',
+        //subtext: 'Mocking Data',
+        x: 'center'
+      },
+      tooltip: {
+        trigger: 'item',
+        formatter: '{a} <br/>{b} : {c} ({d}%)'
+      },
+      
+      legend: {
+        x: 'center',
+        y: 'bottom',
+        data: ['catéter umbilical','sin catéter umbilical']
+      },
+      calculable: true,
+      series: [
+        {
+          name: '',
+          type: 'pie',
+          radius: [30, 80],
+          roseType: 'area',
+          data: [
+            { value: this.cateter, name: 'catéter umbilical' },
+            { value: this.nocateter, name: 'sin catéter umbilical' }
+          ]
+        }
+      ]
+    };
+
+    this.options6 = {
+      title: {
+        text: 'Deposiciones, vómitos y abdomen normal',
+        //subtext: 'Mocking Data',
+        x: 'center'
+      },
+      legend: {
+        data: ['Depos  normales', 'Ab normal','vomitos'],
+        align: 'left',
+      },
+      tooltip: {},
+      xAxis: {
+        //data: ['Deposiciones normales','Abdomen normal','Vómitos'],
+        silent: false,
+        splitLine: {
+          show: false,
+        },
+      },
+      xAxisTicks:['Deposiciones normales','Abdomen normal','Vómitos'],
+      yAxis:[{
+        type: 'value'
+      }],
+      series: [
+        {
+          name: 'Deposiciones normales',
+          type: 'bar',
+          data: [this.deposiciones],
+          animationDelay: (idx) => idx * 10,
+        },
+        {
+          name: 'Abdomen normal',
+          type: 'bar',
+          data: [this.abdomen],
+          animationDelay: (idx) => idx * 10 + 100,
+        },
+        {
+          name: 'Vomitos',
+          type: 'bar',
+          data: [this.vomitos],
+          animationDelay: (idx) => idx * 10 + 100,
+        }
+      ],
+      animationEasing: 'elasticOut',
+      animationDelayUpdate: (idx) => idx * 5,
+    };
   }
   
   countGender(){
@@ -183,6 +319,54 @@ export class EstadisticasComponent implements OnInit {
       this.semanas[p.pregnancy_period-24]++;
     }
   }
-  
-  
+
+  countCir(){
+    for(var p of this.pacientes){
+      if(p.protocolo.cir==true){
+        this.cir++;
+      }else{
+        this.nocir++
+      }
+    }
+  }
+
+  countCateter(){
+    for(var p of this.pacientes){
+      if(p.protocolo.cateter==true){
+        this.cateter++;
+      }else{
+        this.nocateter++
+      }
+    }
+  }
+
+  countEvolucion(){
+      for(var p of this.pacientes){
+        if(p.protocolo.tomas.length>1){
+          for(var toma of p.protocolo.tomas){
+              if(toma.titulo!='inicio'){
+                if(toma.abdomenNormal){
+                  this.abdomen++
+                }
+                if(toma.deposicionesNormales){
+                  this.deposiciones++
+                }
+                if(toma.vomitos){
+                  this.vomitos++
+                }
+                this.dias++
+              }
+              
+            
+          }
+        }
+      }
+      console.log('abdomen',this.abdomen)
+      console.log('abdomen',this.deposiciones)
+      console.log('abdomen',this.vomitos)
+      console.log('dias',this.dias)
+  }
+
+
+
 }
