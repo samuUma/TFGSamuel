@@ -96,7 +96,7 @@ export class CalendarioComponent implements OnInit{
       right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
     },
     buttonText:{
-      today:    'día actual',
+      today:    'hoy',
       month:    'mes',
       week:     'semana',
       day:      'día',
@@ -184,14 +184,32 @@ export class CalendarioComponent implements OnInit{
   verCalendario(idx:string): void{
     this.router.navigate(['/calendario',idx]);
 }
+  
+  CambiaColorAntiguo(fecha:string){
+    var fechaN=new Date(fecha)
+    //console.log(fechaN)
+    if(fechaN<new Date()){
+      return 'grey'
+    }
+  }
+  
+  CambiaColorAntiguo2(fecha:string){
+    var fechaN=new Date(fecha)
+    //console.log(fechaN)
+    if(fechaN<new Date()){
+      return 'done'
+    }
+  }
 
   //funcion para generar un evento
   generarEvento(titulo:string,fecha:string){
-    return {title: titulo, start: fecha}
+    return {title: titulo, start: fecha,extendedProps: {status: this.CambiaColorAntiguo2(fecha)},color:this.CambiaColorAntiguo(fecha)}
   }
+  //añadir para cambiar un evento a terminado
+  //extendedProps: {status: 'done'}
 
   generarEvento3(titulo:string,fecha:string){
-    return {title: titulo, date: fecha}
+    return {title: titulo, start: fecha,extendedProps: {status: this.CambiaColorAntiguo2(fecha)},color:this.CambiaColorAntiguo(fecha)}
   }
 
   //funcion para calcular las tomas del paciente
@@ -204,11 +222,11 @@ export class CalendarioComponent implements OnInit{
     var fecha=new Date(this.devolverFecha(this.paciente.protocolo.fechaInicio))
     //sumamos un dia para saber que el protocolo empieza el 2 dia
     fecha.setDate(fecha.getDate()+1)
+    this.fechas.push(this.generarEvento3('Inicio del protocolo',fecha.toISOString().split('T')[0]))
+    this.fechas.push(this.generarEvento3('Inicio Alimentación enteral trófica',fecha.toISOString().split('T')[0]))
     //agregamos estos eventos al calendario
-    this.fechas.push(this.generarEvento3('Inicio del protocolo',this.devolverFecha(this.paciente.protocolo.fechaInicio)))
-    this.fechas.push(this.generarEvento3('Inicio Alimentación enteral trófica',this.devolverFecha(this.paciente.protocolo.fechaInicio)))
     //generamos la lista de tomas troficas del paciente
-    this.generarTomas(fecha)
+    this.generarTrofica(fecha)
     this.fechas.push(this.generarEvento3('Fin Alimentación enteral trófica',fecha.toISOString().split('T')[0]))
     this.fechas.push(this.generarEvento3('Inicio Alimentación enteral completa',fecha.toISOString().split('T')[0]))
     //generamos la lista de tomas completas del paciente
@@ -250,12 +268,12 @@ export class CalendarioComponent implements OnInit{
 
   //funcion para generar el string del evento
   numerarToma(num:number,cantidad:number):string{
-    var toma='Toma '+String(num)+': '+cantidad+' ml'
+    var toma='Dosis '+String(num)+': '+cantidad+' ml'
     return toma;
   }
 
   //funcion para generar las tomas segun las caracteristicas del paciente
-  generarTomas(fecha:Date){
+  generarTrofica(fecha:Date){
     //numero de horas a las que dar de comer, 8 tomas diarias, cada 3 horas
     var horas=[0,3,6,9,12,15,18,21]
     //numero de dias de alimentacion enteral trofica en funcion del peso,semanas y cir
@@ -376,6 +394,12 @@ export class CalendarioComponent implements OnInit{
     return tempfecha;
   }
 
+  devolverFecha2(fecha:string){
+    var FechaArr=fecha.split('-')
+    var tempfecha=FechaArr[2]+"/"+FechaArr[1]+"/"+FechaArr[0]
+    return tempfecha;
+  }
+
   actualizarEvolucion(event):void{
 
     var titulos=['Inicio del protocolo','Inicio Alimentación enteral trófica','Fin Alimentación enteral trófica','Inicio Alimentación enteral completa','Fin Alimentación enteral completa']
@@ -429,25 +453,37 @@ export class CalendarioComponent implements OnInit{
         this.comprobantes.push({titulo:event.event.title,fecha:tempDate,deposicionesNormales:resp.value['swal1'],vomitos:resp.value['swal2'],abdomenNormal:resp.value['swal3']})
         //this.paciente.protocolo.tomas=this.comprobantes;
         this.paciente.protocolo.tomas.push({titulo:event.event.title,fecha:tempDate,deposicionesNormales:resp.value['swal1'],vomitos:resp.value['swal2'],abdomenNormal:resp.value['swal3']})
-        console.log('comprobantes',this.comprobantes)
-        console.log('evolucion del paciente:',this.paciente.protocolo.tomas)
+        //console.log('comprobantes',this.comprobantes)
+       // console.log('evolucion del paciente:',this.paciente.protocolo.tomas)
         if(resp.value['swal4']==true){
           this.paciente.protocolo.acortarProtocolo=true;
         }
         this._pacientesService.actualizarPaciente(this.paciente)
         .subscribe(resp => {
         });
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/pacientes');
         this.ngOnInit()
-          Swal.fire({title:'Datos actualizados',icon:'info'});
+        this.cambiarActivo()
+        Swal.fire({title:'Datos actualizados',icon:'info'});
       }
     )
   }
 
-
-
+  cambiarActivo(){
+    var current = document.getElementsByClassName("btn active");
+    if (current.length > 0) {
+      current[0].className = current[0].className.replace(" active", "");
+    }
+    document.getElementById("pacientesactivos").className += " active"
+  }
+  
   actualizarEventos(){
     this.calendarOptions= {
+      eventTimeFormat: { 
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12:false
+    },
       //cargar plugins
       plugins: [ interactionPlugin, dayGridPlugin ],
       //vista inicial, modo semanal
@@ -467,10 +503,11 @@ export class CalendarioComponent implements OnInit{
         left: 'prevYear,prev,next,nextYear today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+
       },
       // texto de los botones
       buttonText:{
-        today:    'día actual',
+        today:    'hoy',
         month:    'mes',
         week:     'semana',
         day:      'día',
@@ -478,13 +515,14 @@ export class CalendarioComponent implements OnInit{
       },
       // hora actual
       nowIndicator: true,
-      // cambiar estilo de los eventos terminados
+      // cambiar estilo de los eventos terminados y ocultar eventos con mas de un dia de adelanto
       eventDidMount: function(info) {
         if (info.event.extendedProps.status === 'done') {
           // cambiar el color a gris de los eventos terminados
-          info.el.style.backgroundColor = '#d3d3d3';
-          info.el.style.borderColor= '#d3d3d3';
-          eventTextColor:'white'
+          info.el.style.color='grey'
+        }
+        if(info.event.start.getDate()-1>(new Date().getDate())){
+          info.el.style.display='none'
         }
       },
       // mostrar el nombre completo del dia de la semana
@@ -512,6 +550,7 @@ export class CalendarioComponent implements OnInit{
       //height:"auto",
       // hora con la que empezar
       //scrollTime: '06:00:00'
+      
     };
   }
 

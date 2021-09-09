@@ -13,6 +13,7 @@ import {CalendarioComponent} from './components/calendario/calendario.component'
 import { AgregarPacienteComponent } from './components/agregar-paciente/agregar-paciente.component';
 import { EditarPacienteComponent } from './components/editar-paciente/editar-paciente.component';
 import { IniciarProtocoloComponent } from './components/iniciar-protocolo/iniciar-protocolo.component';
+import { PacientesinactivosComponent } from './components/pacientesinactivos/pacientesinactivos.component';
 
 // cada path es el nombre de la ruta a usar en el [routerLink]="['nombre-de-la-ruta'] en el nav bar"
 const APP_ROUTES: Routes = [
@@ -26,6 +27,7 @@ const APP_ROUTES: Routes = [
     { path: 'agregarPaciente', component: AgregarPacienteComponent, canActivate: [AuthGuard]},
     { path: 'editarPaciente/:id', component: EditarPacienteComponent, canActivate: [AuthGuard]},
     { path: 'iniciarProtocolo/:id', component: IniciarProtocoloComponent, canActivate: [AuthGuard]},
+    { path: 'pacientesInactivos', component: PacientesinactivosComponent, canActivate: [AuthGuard]},
     { path: 'paciente/:id/:pesoOSemanasAdecuado/:calostroOLmDisponible', component:PacienteComponent, canActivate: [AuthGuard]},
     { path: '**', pathMatch: 'full', redirectTo: 'login'}
 ];

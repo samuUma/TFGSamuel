@@ -1,5 +1,6 @@
 <!-- full-calendar para agregar el calendario -->
 <!-- [options]="calendarOptions" -->
+<div class="animated fadeIn fast">
 <div *ngIf="cargando" class="alert alert-info text-center mt-3">
   <h4 class="alert-heading">Cargando</h4>
   <p>
@@ -9,11 +10,19 @@
     Espere por favor
   </p>
 </div>
+<h2>{{paciente?.first_name}} {{paciente?.last_name}}</h2>
 <div class="outer" style="width:107%;">
   <full-calendar *ngIf="!cargando" id="calendario" [options]="calendarOptions"></full-calendar>
 </div>
 
 <div class="card-footer animated fadeIn fast">
-  <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
+  <button *ngIf="!cargando" [routerLink]="['/pacientes']" (click)="cambiarActivo()" type="button" class="btn btn-outline-primary">Atrás</button>
   </div>
 
+<style>
+    h2 {text-align: center;
+      position: relative;
+      right: -50px;}
+
+</style>
+</div>

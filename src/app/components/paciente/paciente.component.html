@@ -18,84 +18,157 @@
 
 
 
-  <div class="card text-center animated fadeIn fast">
-    <div class="card-header">
-      <h5 class="card-title"> {{paciente?.first_name}} {{paciente?.last_name}}</h5>
-    </div>
-    <div class="card-body">
-      <p class="card-text">Fecha de nacimiento: {{paciente?.birthdate}}</p>
-      <p class="card-text">Sexo: {{paciente?.sex}}</p>
-      <p class="card-text">Semanas de gestación: {{paciente?.pregnancy_period}} semanas</p>
-      <p class="card-text">Peso al nacer: {{paciente?.weight}} g</p>
-      <p *ngIf="!this.paciente.protocol" class="card-text">Protocolo alimentario no iniciado</p>
-      <p *ngIf="this.paciente.protocol" class="card-text">Fecha de inicio del protocolo: {{paciente?.protocolo?.fechaInicio}}</p>
-      <p *ngIf="this.paciente.protocolo.calostroOLmDisponible" class="card-text">Calostro disponible al iniciar el protocolo</p>
-      <p *ngIf="this.paciente.protocolo.cir" class="card-text">Paciente CIR</p>
-      <p *ngIf="this.paciente.protocolo.cateter" class="card-text">Presencia de catéter umbilical</p>
-      <div *ngIf="this.paciente.protocolo.tomas.length>1">
-        <p class="card-text">Evolución del paciente:</p>
-        <div class="col"  *ngFor="let toma of this.paciente.protocolo.tomas">
-          <div *ngIf="toma.titulo != 'inicio' ">
-              <div class="row">
-                <div class="column">
-                  <p class="card-text">{{toma.titulo}}, {{toma.fecha.split('T')[0]}} {{toma.fecha.split('T')[1].substring(0,5)}}</p>
-                </div>
-                <div class="column">
-                  <div *ngIf="toma.abdomenNormal">
-                    abdomen normal: Sí
-                  </div>
-                  <div *ngIf="!toma.abdomenNormal">
-                    abdomen normal: No
-                  </div>
-                </div>
-                <div class="column">
-                  <div *ngIf="toma.deposicionesNormales">
-                    Deposiciones normales: Sí
-                  </div>
-                  <div *ngIf="!toma.deposicionesNormales">
-                    Deposiciones normales: No
-                  </div>
-                </div>
-                <div class="column">
-                  <div *ngIf="toma.vomitos">
-                    Vómitos: Sí
-                  </div>
-                  <div *ngIf="!toma.vomitos">
-                    Vómitos: No
-                  </div>
-                </div>
-                <br><br>
-              </div>
+<div class="card text-center animated fadeIn fast">
+  <div class="card-header">
+    <h5 class="card-title"> {{paciente?.first_name}} {{paciente?.last_name}}</h5>
+  </div>
+
+  <table class="table table-striped table-bordered">
+    <tbody>
+      <tr>
+        <th scope="row">Fecha de nacimiento:</th>
+        <td>{{paciente?.birthdate}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Sexo:</th>
+        <td>{{paciente?.sex}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Semanas de gestación:</th>
+        <td>{{paciente?.pregnancy_period}} semanas</td>
+      </tr>
+      <tr>
+        <th scope="row">Peso al nacer:</th>
+        <td> {{paciente?.weight}} g</td>
+      </tr>
+      <tr>
+        <th scope="row">Protocolo alimenticio:</th>
+        <td *ngIf="!this.paciente.protocol"> No iniciado </td>
+        <td *ngIf="this.paciente.protocol"> Iniciado </td>
+      </tr>
+      <tr>
+        <th scope="row" *ngIf="this.paciente.protocol">Fecha de inicio del protocolo:</th>
+        <td *ngIf="this.paciente.protocol">{{paciente?.protocolo?.fechaInicio}}</td>
+      </tr>
+      <tr>
+        <th scope="row" *ngIf="this.paciente.protocol">Calostro disponible al iniciar el protcolo:</th>
+        <td *ngIf="this.paciente.protocolo.calostroOLmDisponible">Sí</td>
+        <td *ngIf="!this.paciente.protocolo.calostroOLmDisponible && this.paciente.protocol">No</td>
+      </tr>
+      <tr>
+        <th scope="row" *ngIf="this.paciente.protocol">Paciente CIR:</th>
+        <td *ngIf="this.paciente.protocolo.cir">Sí</td>
+        <td *ngIf="!this.paciente.protocolo.cir && this.paciente.protocol">No</td>
+      </tr>
+      <tr>
+        <th scope="row" *ngIf="this.paciente.protocol">Presencia de catéter umbilical:</th>
+        <td *ngIf="this.paciente.protocolo.cateter">Sí</td>
+        <td *ngIf="!this.paciente.protocolo.cateter && this.paciente.protocol">No</td>
+      </tr>
+      <tr>
+        <th scope="row" *ngIf="this.paciente.protocol">Protocolo finalizado:</th>
+        <td *ngIf="this.paciente.protocolo.protocoloFinalizado">Sí</td>
+        <td *ngIf="!this.paciente.protocolo.protocoloFinalizado && this.paciente.protocol">No</td>
+      </tr>
+      <tr>
+        <th scope="row" *ngIf="this.paciente.protocolo.protocoloFinalizado">Motivo de finalización del protocolo:</th>
+        <td *ngIf="this.paciente.protocolo.protocoloFinalizado && this.paciente.protocolo.protocoloFinalizadoBien">
+          Paciente recuperado exitosamente</td>
+        <td *ngIf="this.paciente.protocolo.protocoloFinalizado && this.paciente.protocolo.protocoloFinalizadoMal">
+          Paciente fallecido</td>
+        <td *ngIf="this.paciente.protocolo.protocoloFinalizado && this.paciente.protocolo.protocoloFinalizadoOtro">
+          Sustitución por otro tratamiento</td>
+      </tr>
+      <tr *ngIf="this.paciente.protocolo.tomas.length>1">
+        <th>Evolución del paciente</th>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <b>Deposiciones normales</b>
+            </div>
+            <div class="col-sm">
+              <b>Vómitos</b>
+            </div>
+            <div class="col-sm">
+              <b>Abdomen normal</b>
+            </div>
           </div>
         </div>
-      </div>
-      
-      
+      </tr>
+      <tr *ngFor="let toma of this.paciente.protocolo.tomas">
+        <td *ngIf="toma.titulo != 'inicio' ">{{toma.titulo}}, fecha: {{toma.fecha.split('T')[0]}}
+          {{toma.fecha.split('T')[1].substring(0,5)}}</td>
+        <div class="container" *ngIf="toma.titulo != 'inicio' ">
+          <div class="row">
+            <div class="col-sm">
+              <div *ngIf="toma.deposicionesNormales">
+                Sí
+              </div>
+              <div *ngIf="!toma.deposicionesNormales">
+                No
+              </div>
+            </div>
+            <div class="col-sm">
+              <div *ngIf="toma.vomitos">
+                Sí
+              </div>
+              <div *ngIf="!toma.vomitos">
+                No
+              </div>
+            </div>
+            <div class="col-sm">
+              <div *ngIf="toma.abdomenNormal">
+                Sí
+              </div>
+              <div *ngIf="!toma.abdomenNormal">
+                No
+              </div>
+            </div>
+          </div>
+        </div>
+      </tr>
 
-    <br><br>
-    <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
-    <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo alimentario</button>
+
+    </tbody>
+  </table>
+
+
+
+
+
+  <div class="card-body">
+    
+    <br>
+    <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"
+      class="btn btn-outline-primary">Calendario</button>
+    <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"
+      class="btn btn-outline-primary">Iniciar protocolo alimentario</button>
     &nbsp; &nbsp;
-    <button  type="button" (click)="editarPaciente(paciente.id)"  class="btn btn-outline-primary">Editar paciente</button>
+    <button *ngIf="!this.paciente.protocolo.protocoloFinalizado" type="button" (click)="editarPaciente(paciente.id)"
+      class="btn btn-outline-primary">Editar paciente</button>
     &nbsp; &nbsp;
-    <button  type="button" (click)="borrarPaciente(paciente.id)"  class="btn btn-outline-danger">Borrar paciente</button>
-    &nbsp; &nbsp;
-    <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
+    <!-- 
+      <button *ngIf="!this.paciente.protocolo.protocoloFinalizado" type="button" (click)="borrarPaciente(paciente.id)"
+      class="btn btn-outline-danger">Borrar paciente</button>
+    -->
+
+    &nbsp;
+    <button [routerLink]="['/pacientes']" (click)="cambiarActivo()" type="button"
+      class="btn btn-outline-primary">Atrás</button>
   </div>
-  </div>
-  
+</div>
+
 
 <style>
-.column {
-  float: left;
-  width: 25%;
-}
+  .column {
+    float: left;
+    width: 25%;
+  }
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 </style>

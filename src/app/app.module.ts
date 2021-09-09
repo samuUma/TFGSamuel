@@ -36,6 +36,7 @@ import { IniciarProtocoloComponent } from './components/iniciar-protocolo/inicia
 
 //graficas
 import { NgxEchartsModule } from 'ngx-echarts';
+import { PacientesinactivosComponent } from './components/pacientesinactivos/pacientesinactivos.component';
 
 //calendario-------------------
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -60,6 +61,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AgregarPacienteComponent,
     EditarPacienteComponent,
     IniciarProtocoloComponent,
+    PacientesinactivosComponent,
     //calendario
   ],
   imports: [

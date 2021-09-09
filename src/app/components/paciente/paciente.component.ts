@@ -81,7 +81,15 @@ borrarPaciente(idx:string): void{
 
   });
 }
-   
+
+cambiarActivo(){
+  var current = document.getElementsByClassName("btn active");
+  if (current.length > 0) {
+    current[0].className = current[0].className.replace(" active", "");
+  }
+  document.getElementById("pacientesactivos").className += " active"
+}
+
 mostrarCargando(){
   while(this.cargando==true){
     Swal.fire('Espere por favor...','','info');

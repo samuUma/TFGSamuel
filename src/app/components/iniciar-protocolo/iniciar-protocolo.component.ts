@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { paciente, PacientesService } from '../../services/pacientes.service';
 import { HttpClient } from '@angular/common/http';
 import { ThrowStmt } from '@angular/compiler';
+import { formatCurrency } from '@angular/common';
 
 
 @Component({
@@ -58,23 +59,62 @@ export class IniciarProtocoloComponent implements OnInit {
     this.alarma=false;
     this.textos=new Array();  
 
+    if(forma.value['estabilidadHemodinamica']=="false"){
+      forma.form.controls['estabilidadHemodinamica'].setErrors({'incorrect': true});
+        return;
+    }
+
+    if(forma.value['perfusion12horas']=="false"){
+      forma.form.controls['perfusion12horas'].setErrors({'incorrect': true});
+        return;
+    }
+    if(forma.value['sinAsfixia']=="false"){
+      forma.form.controls['sinAsfixia'].setErrors({'incorrect': true});
+        return;
+    }
+    
     if(forma.invalid){
       Object.values(forma.controls).forEach(control => 
         {control.markAllAsTouched()});
         return;
     }
-
+    
     console.log('valores del formulario',forma.value)
 
     this.protocolo.estabilidadHemodinamica=forma.value['estabilidadHemodinamica'];
     this.protocolo.perfusion12horas=forma.value['perfusion12horas'];
     this.protocolo.sinAsfixia=forma.value['sinAsfixia'];
-    this.protocolo.pesoOSemanasAdecuado=forma.value['pesoOSemanasAdecuado'];
+    if(forma.value['pesoOSemanasAdecuado']=="false"){
+      this.protocolo.pesoOSemanasAdecuado=false;
+    }else{
+      this.protocolo.pesoOSemanasAdecuado=true;
+    }
+    if(forma.value['calostroOLmDisponible']=="false"){
+      this.protocolo.calostroOLmDisponible=false;
+    }else{
+      this.protocolo.calostroOLmDisponible=true;
+    }
+    if(forma.value['cir']=="false"){
+      this.protocolo.cir=false;
+    }else{
+      this.protocolo.cir=true;
+    }
+    if(forma.value['cateter']=="false"){
+      this.protocolo.cateter=false;
+    }else{
+      this.protocolo.cateter=true;
+    }
+    this.protocolo.protocoloFinalizado=false;
+    this.protocolo.protocoloFinalizadoBien=false;
+    this.protocolo.protocoloFinalizadoMal=false;
+    this.protocolo.protocoloFinalizadoOtro=false;
+    /*
     this.protocolo.calostroOLmDisponible=forma.value['calostroOLmDisponible'];
     this.protocolo.cir=forma.value['cir'];
     this.protocolo.cateter=forma.value['cateter'];
 
     if(!this.protocolo.pesoOSemanasAdecuado){
+      console.log('peso',this.protocolo.pesoOSemanasAdecuado)
       this.protocolo.pesoOSemanasAdecuado=false;
     }
     if(!this.protocolo.calostroOLmDisponible){
@@ -86,12 +126,14 @@ export class IniciarProtocoloComponent implements OnInit {
     if(!this.protocolo.cateter){
       this.protocolo.cateter=false;
     }
+    */
     console.log('protocolo',this.protocolo)
 
     
   
 
     if(this.checkPesoSemanas && !this.protocolo.pesoOSemanasAdecuado){
+      console.log('peso',this.checkPesoSemanas())
       this.textos.push(this.textoPesoSemanas);
       this.alarma=true;
     }
@@ -114,7 +156,7 @@ export class IniciarProtocoloComponent implements OnInit {
     console.log('que pasa protocolo',this.valoresProtocolo(this.protocolo))
     this.paciente.protocolo=this.protocolo;
     if(this.alarma){
-      this.terminarFormulario(this.atencion,this.textos)
+      this.terminarFormulario(this.atencion,this.textos,forma)
     }else{
       this.terminarFormulario2();
     }
@@ -132,7 +174,7 @@ export class IniciarProtocoloComponent implements OnInit {
       Swal.fire({title:'Protocolo iniciado con éxito',icon:'info'});
   }
 
-  terminarFormulario(titulo:string,textos:string[]): void{
+  terminarFormulario(titulo:string,textos:string[],forma:NgForm): void{
 
     Swal.fire({title:titulo,html:textos.join('<br>'),
       icon:'info',showConfirmButton:true,showCancelButton:true,
@@ -147,7 +189,9 @@ export class IniciarProtocoloComponent implements OnInit {
        this.router.navigateByUrl('/home');
        this.ngOnInit();
        Swal.fire({title:'Protocolo iniciado con éxito',icon:'info'});
-     } 
+     }else{
+       forma.resetForm()
+     }
    })
   }
 
@@ -189,6 +233,10 @@ export class InicioProtocolo{
   cateter:boolean;
   fechaInicio:string;
   acortarProtocolo:boolean;
+  protocoloFinalizado:boolean;
+  protocoloFinalizadoBien:boolean;
+  protocoloFinalizadoMal:boolean;
+  protocoloFinalizadoOtro:boolean;
   tomas=[{titulo:'inicio',fecha:'fecha inicial',deposicionesNormales:'inicio',vomitos:'inicio',abdomenNormal:'inicio'}]
 }
 

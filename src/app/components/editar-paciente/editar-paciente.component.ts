@@ -41,6 +41,14 @@ export class EditarPacienteComponent implements OnInit {
     });
   }
   
+  cambiarActivo(){
+    var current = document.getElementsByClassName("btn active");
+    if (current.length > 0) {
+      current[0].className = current[0].className.replace(" active", "");
+    }
+    document.getElementById("pacientesactivos").className += " active"
+  }
+  
   guardar( forma:NgForm ){
     //comprobar la validez del formulario
     if( forma.invalid ){

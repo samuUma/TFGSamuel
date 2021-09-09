@@ -1,4 +1,4 @@
-
+<div class="animated fadeIn fast">
 <h4>Información básica</h4>
 <hr>
 <form autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm">
@@ -43,6 +43,7 @@
     <div class="col-8">
       <input class="form-control"
              type="date"
+             id="fecha"
              name="fecha"
              [class.is-invalid]="fecha.invalid && fecha.touched"
              [ngModel]="paciente.birthdate"
@@ -97,30 +98,33 @@
     <div class="col-8">
       <input class="form-control"
              type="number"
+             pattern="(3000|([1-2][0-9][0-9][0-9])|([5-9][0-9][0-9]))"
              placeholder="Peso al nacer"
-             min="500"
-             max="3000"
-             step="5"
-             value="1500"  [ngModel]="paciente.weight" #peso="ngModel" name="peso" required
-             [class.is-invalid]="peso.invalid && peso.touched" onKeyDown="return false">
-             <small *ngIf="peso.invalid && peso.touched" class="form-text text-danger">Peso es obligatorio</small>
+             [ngModel]="paciente.weight" #peso="ngModel" name="peso" required
+             [class.is-invalid]="peso.invalid && peso.touched" 
+             >
+             <small *ngIf="peso.invalid && peso.touched" class="form-text text-danger">Peso es obligatorio, minimo:500g, maximo:3000g</small>
              
     </div>
   </div>
-  
+  <!--
+    Para que el usuario no pueda escribir por teclado:
+    onKeyDown="return false"
+  -->
 
 
   <div class="form-group row">
     <label class="col-2 col-form-label">&nbsp;</label>
     <div class="input-group col-md-8">
-      <button type="submit" class="btn btn-outline-primary btn-block">
+      <button type="submit" class="btn btn-outline-primary btn-block" [disabled]="forma.invalid">
         Guardar
       </button>
       &nbsp;
       &nbsp;
       &nbsp;
-      <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
+      <button [routerLink]="['/pacientes']" (click)="cambiarActivo()" type="button" class="btn btn-outline-primary">Atrás</button>
     </div>
   </div>
 
 </form>
+</div>

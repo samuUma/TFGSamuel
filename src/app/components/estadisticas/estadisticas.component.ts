@@ -24,6 +24,10 @@ export class EstadisticasComponent implements OnInit {
   vomitos:number=0;
   abdomen:number=0;
   dias:number=0;
+  finalbien:number=0;
+  finalMal:number=0;
+  finalOtro:number=0;
+  nofinal:number=0;
   theme: string | ThemeOption;
   options1;
   options2;
@@ -31,6 +35,7 @@ export class EstadisticasComponent implements OnInit {
   options4;
   options5;
   options6;
+ 
 
   initOpts = {
     renderer: 'svg',
@@ -74,6 +79,7 @@ export class EstadisticasComponent implements OnInit {
       this.countCir()
       this.countCateter()
       this.countEvolucion()
+      this.countFinalizacion()
       this.cargarGrafica()
     });
   }
@@ -81,7 +87,7 @@ export class EstadisticasComponent implements OnInit {
   cargarGrafica(){
     this.options1 = {
       title: {
-        text: 'Pacientes según sexo',
+        text: 'Pacientes según progreso',
         //subtext: 'Mocking Data',
         x: 'center'
       },
@@ -93,7 +99,7 @@ export class EstadisticasComponent implements OnInit {
       legend: {
         x: 'center',
         y: 'bottom',
-        data: ['Masculino','Femenino']
+        data: ['no finalizado aún','finalizado con éxito','fallecido','inacabado']
       },
       calculable: true,
       series: [
@@ -103,8 +109,10 @@ export class EstadisticasComponent implements OnInit {
           radius: [30, 80],
           roseType: 'area',
           data: [
-            { value: this.male, name: 'Masculino' },
-            { value: this.female, name: 'Femenino' }
+            { value: this.nofinal, name: 'no finalizado aún' },
+            { value: this.finalbien, name: 'finalizado con éxito' },
+            { value: this.finalMal, name: 'fallecido' },
+            { value: this.finalOtro, name: 'inacabado' }
           ]
         }
       ]
@@ -365,6 +373,26 @@ export class EstadisticasComponent implements OnInit {
       console.log('abdomen',this.deposiciones)
       console.log('abdomen',this.vomitos)
       console.log('dias',this.dias)
+  }
+
+  countFinalizacion(){
+    for(var p of this.pacientes){
+      if(p.protocolo.protocoloFinalizado==false){
+        this.nofinal++;
+      }else{
+        if(p.protocolo.protocoloFinalizadoBien==true){
+          this.finalbien++
+        }else if(p.protocolo.protocoloFinalizadoMal==true){
+          this.finalMal++;
+        }else{
+          this.finalOtro++;
+        }
+      }
+    }
+    console.log('no acabado',this.nofinal)
+      console.log('exito',this.finalbien)
+      console.log('mal',this.finalMal)
+      console.log('otro',this.finalOtro)
   }
 
 

@@ -42,6 +42,10 @@ export class PacientesService{
         });
     }
 
+    descargarPacientes(){
+        return this.http.get(`${this.url}.json`)
+    }
+
     getPacientes2(){
         return this.http.get(`${this.url}.json`)
         .pipe(
@@ -131,6 +135,10 @@ export class paciente{
         cateter:false,
         fechaInicio:"",
         acortarProtocolo:false,
+        protocoloFinalizado:false,
+        protocoloFinalizadoBien:false,
+        protocoloFinalizadoMal:false,
+        protocoloFinalizadoOtro:false,
         tomas:[{titulo:'inicio',fecha:'fecha inicial',deposicionesNormales:'inicio',vomitos:'inicio',abdomenNormal:'inicio'}]
     }
 }

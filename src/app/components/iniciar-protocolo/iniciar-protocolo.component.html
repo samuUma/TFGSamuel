@@ -1,23 +1,241 @@
-
+<div class="animated fadeIn fast">
 <h4>Requisitos básicos para iniciar el protocolo alimenticio</h4>
 <hr>
 <form autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm">
 
+  <label class="form-check-label">
+    ¿Estabilidad hemodinámica? (presión sanguínea y frecuencia cardíaca normales)
+  </label>
+  &nbsp;
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio" 
+    name="estabilidadHemodinamica" 
+    value="true"
+    [class.is-invalid]="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched"
+    [ngModel]="protocolo.estabilidadHemodinamica"
+    required>
+    <label class="form-check-label">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio"
+    name="estabilidadHemodinamica"
+    value="false"
+    [class.is-invalid]="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched"
+    [ngModel]="protocolo.estabilidadHemodinamica"
+    #estabilidadHemodinamica="ngModel">
+    <label class="form-check-label">No</label>
+    &nbsp;
+    &nbsp;
+    <small *ngIf="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched" class="form-text text-danger">Este campo es obligatorio</small>
+  </div>
 
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" 
-        value="" 
-        id="estabilidadHemodinamica" required 
-        name="estabilidadHemodinamica"
-        [ngModel]="protocolo.estabilidadHemodinamica"
-        #estabilidadHemodinamica="ngModel"
-        [class.is-invalid]="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched">
-        <label class="form-check-label" for="estabilidadHemodinamica">
-            ¿Estabilidad hemodinámica? (presión sanguínea y frecuencia cardíaca normales)
-        </label>
-        <br>
-        <small *ngIf="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched" class="form-text text-danger">Este campo es obligatorio</small>
-    </div>
+  <br>
+  <br>
+
+  <label class="form-check-label">
+    ¿Perfusión estable durante las últimas 12 horas?
+  </label>
+  &nbsp;
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio" 
+    name="perfusion12horas" 
+    value="true"
+    [class.is-invalid]="perfusion12horas.invalid && perfusion12horas.touched"
+    [ngModel]="protocolo.perfusion12horas"
+    required>
+    <label class="form-check-label">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio"
+    name="perfusion12horas"
+    value="false"
+    [class.is-invalid]="perfusion12horas.invalid && perfusion12horas.touched"
+    [ngModel]="protocolo.perfusion12horas"
+    #perfusion12horas="ngModel">
+    <label class="form-check-label">No</label>
+    &nbsp;
+    &nbsp;
+    <small *ngIf="perfusion12horas.invalid && perfusion12horas.touched" class="form-text text-danger">Este campo es obligatorio</small>
+  </div>
+
+  <br>
+  <br> 
+
+  <label class="form-check-label">
+    ¿Ausencia de asfixia?
+  </label>
+  &nbsp;
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio" 
+    name="sinAsfixia" 
+    value="true"
+    [class.is-invalid]="sinAsfixia.invalid && sinAsfixia.touched"
+    [ngModel]="protocolo.sinAsfixia"
+    required>
+    <label class="form-check-label">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio"
+    name="sinAsfixia"
+    value="false"
+    [class.is-invalid]="sinAsfixia.invalid && sinAsfixia.touched"
+    [ngModel]="protocolo.sinAsfixia"
+    #sinAsfixia="ngModel">
+    <label class="form-check-label">No</label>
+    &nbsp;
+    &nbsp;
+    <small *ngIf="sinAsfixia.invalid && sinAsfixia.touched" class="form-text text-danger">Este campo es obligatorio</small>
+  </div>
+
+  <br> 
+  <br>
+
+  <label class="form-check-label">
+    ¿Peso inferior a 1500 g o menos de 32 semanas?
+  </label>
+  &nbsp;
+  <label>(Peso del paciente: {{paciente?.weight}} g, Semanas del paciente: {{paciente?.pregnancy_period}} semanas)</label>
+  &nbsp;
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio" 
+    name="pesoOSemanasAdecuado" 
+    value="true"
+    [class.is-invalid]="pesoOSemanasAdecuado.invalid && pesoOSemanasAdecuado.touched"
+    [ngModel]="protocolo.pesoOSemanasAdecuado"
+    required>
+    <label class="form-check-label">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio"
+    name="pesoOSemanasAdecuado"
+    value="false"
+    [class.is-invalid]="pesoOSemanasAdecuado.invalid && pesoOSemanasAdecuado.touched"
+    [ngModel]="protocolo.pesoOSemanasAdecuado"
+    #pesoOSemanasAdecuado="ngModel">
+    <label class="form-check-label">No</label>
+    &nbsp;
+    <small *ngIf="pesoOSemanasAdecuado.invalid && pesoOSemanasAdecuado.touched" class="form-text text-danger">Este campo es obligatorio</small>
+  </div>
+
+  <br>
+  <br>
+
+  <label class="form-check-label">
+    ¿Calostro o leche materna disponible?
+  </label>
+  &nbsp;
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio" 
+    name="calostroOLmDisponible" 
+    value="true"
+    [class.is-invalid]="calostroOLmDisponible.invalid && calostroOLmDisponible.touched"
+    [ngModel]="protocolo.calostroOLmDisponible"
+    required>
+    <label class="form-check-label">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio"
+    name="calostroOLmDisponible"
+    value="false"
+    [class.is-invalid]="calostroOLmDisponible.invalid && calostroOLmDisponible.touched"
+    [ngModel]="protocolo.calostroOLmDisponible"
+    #calostroOLmDisponible="ngModel">
+    <label class="form-check-label">No</label>
+    &nbsp;
+    &nbsp;
+    <small *ngIf="calostroOLmDisponible.invalid && calostroOLmDisponible.touched" class="form-text text-danger">Este campo es obligatorio</small>
+  </div>
+
+  <br>
+  <br>
+
+  <label class="form-check-label">
+    ¿Crecimiento intrauterino retardado? (CIR)
+  </label>
+  &nbsp;
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio" 
+    name="cir" 
+    value="true"
+    [class.is-invalid]="cir.invalid && cir.touched"
+    [ngModel]="protocolo.cir"
+    required>
+    <label class="form-check-label">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio"
+    name="cir"
+    value="false"
+    [class.is-invalid]="cir.invalid && cir.touched"
+    [ngModel]="protocolo.cir"
+    #cir="ngModel">
+    <label class="form-check-label">No</label>
+    &nbsp;
+    &nbsp;
+    <small *ngIf="cir.invalid && cir.touched" class="form-text text-danger">Este campo es obligatorio</small>
+  </div>
+
+  <br>
+  <br>
+
+  <label class="form-check-label">
+    ¿Catéter umbilical?
+  </label>
+  &nbsp;
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio" 
+    name="cateter" 
+    value="true"
+    [class.is-invalid]="cateter.invalid && cateter.touched"
+    [ngModel]="protocolo.cateter"
+    required>
+    <label class="form-check-label">Sí</label>
+  </div>
+  <div class="form-check form-check-inline">
+    <input class="form-check-input" 
+    type="radio"
+    name="cateter"
+    value="false"
+    [class.is-invalid]="cateter.invalid && cateter.touched"
+    [ngModel]="protocolo.cateter"
+    #cateter="ngModel">
+    <label class="form-check-label">No</label>
+    &nbsp;
+    &nbsp;
+    <small *ngIf="cateter.invalid && cateter.touched" class="form-text text-danger">Este campo es obligatorio</small>
+  </div>
+  <!--
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" 
+          value="" 
+          id="estabilidadHemodinamica" required 
+          name="estabilidadHemodinamica"
+          [ngModel]="protocolo.estabilidadHemodinamica"
+          #estabilidadHemodinamica="ngModel"
+          [class.is-invalid]="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched">
+          <label class="form-check-label" for="estabilidadHemodinamica">
+              ¿Estabilidad hemodinámica? (presión sanguínea y frecuencia cardíaca normales)
+          </label>
+          <br>
+          <small *ngIf="estabilidadHemodinamica.invalid && estabilidadHemodinamica.touched" class="form-text text-danger">Este campo es obligatorio</small>
+        </div>
+
+  
+
 
     <br>
 
@@ -36,6 +254,7 @@
     </div>
 
     <br>
+    
 
     <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" 
@@ -52,6 +271,7 @@
     </div>
 
   <br>
+    
 
   <div class="form-check">
         <input class="form-check-input" type="checkbox" 
@@ -68,6 +288,7 @@
 
   <br>
 
+
   <div class="form-check">
         <input class="form-check-input" type="checkbox" value="" 
         id="calostroOLmDisponible"  
@@ -80,6 +301,7 @@
   </div>
 
   <br>
+
 
   <div class="form-check">
     <input class="form-check-input" type="checkbox" value=""
@@ -100,11 +322,11 @@
     [ngModel]="protocolo.cateter">
     <label class="form-check-label" for="cateter">¿Catéter umbilical?</label>
   </div>
-
+-->
   <div class="form-group row">
         <label class="col-2 col-form-label">&nbsp;</label>
         <div class="input-group col-md-8">
-      <button type="submit" class="btn btn-outline-primary btn-block">
+      <button type="submit" class="btn btn-outline-primary btn-block" [disabled]="forma.invalid">
         Guardar
       </button>
       &nbsp;
@@ -115,3 +337,4 @@
   </div>
 
 </form>
+</div>

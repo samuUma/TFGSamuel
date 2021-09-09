@@ -19,6 +19,28 @@ export class AgregarPacienteComponent implements OnInit {
   ngOnInit(): void {
       //inicializar el paciente vacio
       this.paciente=new paciente();
+      document.getElementById("fecha").setAttribute("min", this.fechaMinima())
+      document.getElementById("fecha").setAttribute("max", this.fechaMaxima())
+  }
+
+  cambiarActivo(){
+    var current = document.getElementsByClassName("btn active");
+    if (current.length > 0) {
+      current[0].className = current[0].className.replace(" active", "");
+    }
+    document.getElementById("pacientesactivos").className += " active"
+  }
+
+  fechaMaxima(){
+    var fecha=new Date()
+    fecha.setDate(fecha.getDate()+2)
+    return fecha.toISOString().split('T')[0];
+  }
+
+  fechaMinima(){
+    var fecha=new Date()
+    fecha.setDate(fecha.getDate()-1)
+    return fecha.toISOString().split('T')[0];
   }
 
   guardar( forma:NgForm ){
@@ -49,6 +71,7 @@ export class AgregarPacienteComponent implements OnInit {
       Swal.close();
       this.router.navigateByUrl('/home');
       Swal.fire({title:'Paciente añadido con éxito',icon:'info'});
+      this.cambiarActivo()
     });
   }
 

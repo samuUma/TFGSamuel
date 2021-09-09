@@ -1,4 +1,4 @@
-
+<div class="animated fadeIn fast">
 <h4>Información básica</h4>
 <hr>
 <form autocomplete="off" (ngSubmit)="guardar( forma )" #forma="ngForm">
@@ -120,8 +120,9 @@
       &nbsp;
       &nbsp;
       &nbsp;
-      <button [routerLink]="['/pacientes']" type="button" class="btn btn-outline-primary">Atrás</button>
+      <button [routerLink]="['/pacientes']" type="button" (click)="cambiarActivo()" class="btn btn-outline-primary">Atrás</button>
     </div>
   </div>
 
 </form>
+</div>
