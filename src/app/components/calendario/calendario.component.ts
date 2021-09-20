@@ -244,7 +244,7 @@ export class CalendarioComponent implements OnInit{
       for(let hora=0; hora<horas.length; hora++){
         fecha.setHours(horas[hora])
         
-        if(this.paciente.weight>1000){
+        if(this.paciente.weight>=1000){
           if(horas[hora]==12 || horas[hora]==0){
             
             this.cantidad=this.cantidad+this.calcularCantidad(10,1)
@@ -286,7 +286,7 @@ export class CalendarioComponent implements OnInit{
     if(this.paciente.weight>750 && this.paciente.weight<1000){
       numDias=6
     }
-    if(this.paciente.protocolo.acortarProtocolo==false && this.paciente.weight>1000 ){
+    if(this.paciente.protocolo.acortarProtocolo==false && this.paciente.weight>=1000 ){
       numDias=5
     }
     if(this.paciente.protocolo.acortarProtocolo==true && this.paciente.weight>1000){
@@ -524,19 +524,23 @@ export class CalendarioComponent implements OnInit{
           // cambiar el color a gris de los eventos terminados
           info.el.style.color='grey'
         }
-        if(info.event.start.getDate()-1>((new Date()).getDate())){
+        
+        if((info.event.start.getDate()-1)>((new Date()).getDate())){
           info.el.style.display='none'
         }
-        if(info.event.title=="Fin Alimentación enteral trófica" && info.event.start>(new Date())){
+        
+        /*
+        if(info.event.title=="Fin Alimentación enteral trófica" && (info.event.start.getDate()-1)>((new Date()).getDate())){
           info.el.style.display='none'
         }
-        if(info.event.title=="Inicio Alimentación enteral completa" && info.event.start>(new Date())){
+        if(info.event.title=="Inicio Alimentación enteral completa" && (info.event.start.getDate()-1)>((new Date()).getDate())){
           info.el.style.display='none'
         }
-        if(info.event.title=="Fin Alimentación enteral completa" && info.event.start>(new Date())){
+        if(info.event.title=="Fin Alimentación enteral completa" && (info.event.start.getDate()-1)>((new Date()).getDate())){
           info.el.style.display='none'
         }
 
+        */
       },
       // mostrar el nombre completo del dia de la semana
       dayHeaderFormat: { weekday: 'long' },
