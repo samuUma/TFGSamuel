@@ -25,6 +25,13 @@ export class PacientesService{
       appId: "1:57704641855:web:6e203d4008024b18cf4f8a",
       measurementId: "G-V0JCXG24H5"
     };
+
+    ordenacion:boolean;
+    ordenacionNombre:boolean=false;
+    ordenacionFecha:boolean=false;
+    ordenacionPredeterminada:boolean=true;
+    estadisticas:boolean;
+
     constructor(private router:Router,private http: HttpClient){
     
     }
@@ -79,6 +86,30 @@ export class PacientesService{
         return tempPacients;
     }
 
+    getOrdenacion(){
+        return this.ordenacion;
+    }
+    
+    setOrdenacionTrue(){
+       this.ordenacion=true;
+    }
+
+    setOrdenacionFalse(){
+        this.ordenacion=false;
+    }
+
+    getEstadisticas(){
+        return this.estadisticas;
+    }
+    
+    setEstadisticasTrue(){
+       this.estadisticas=true;
+    }
+
+    setEstadisticasFalse(){
+        this.estadisticas=false;
+    }
+
     crearPaciente(paciente:paciente){
         console.log('paciente ingresado con exito',`${this.url}.json`,paciente);
         paciente.protocol=false;
@@ -112,8 +143,48 @@ export class PacientesService{
             }
         }
       }
-    
 
+    setOrdenacionNombreTrue(){
+        this.ordenacionNombre=true;
+        this.setOrdenacionFechaFalse()
+        this.setOrdenacionPredeterminadaFalse()
+    }
+    
+    setOrdenacionNombreFalse(){
+        this.ordenacionNombre=false;
+    }
+
+    setOrdenacionFechaTrue(){
+        this.ordenacionFecha=true;
+        this.setOrdenacionNombreFalse()
+        this.setOrdenacionPredeterminadaFalse()
+    }
+    
+    setOrdenacionFechaFalse(){
+        this.ordenacionFecha=false;
+    }
+
+    setOrdenacionPredeterminadaFalse(){
+        this.ordenacionPredeterminada=false;
+    }
+
+    setOrdenacionPredeterminadaTrue(){
+        this.ordenacionPredeterminada=true;
+        this.setOrdenacionFechaFalse()
+        this.setOrdenacionNombreFalse()
+    }
+
+    getOrdenacionNombre(){
+        return this.ordenacionNombre;
+    }
+
+    getOrdenacionFecha(){
+        return this.ordenacionFecha;
+    }
+
+    getOrdenacionPredeterminada(){
+        return this.ordenacionPredeterminada;
+    }
 }
 
 export class paciente{

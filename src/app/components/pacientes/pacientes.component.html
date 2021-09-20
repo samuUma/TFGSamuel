@@ -15,34 +15,108 @@
       <i class="fa fa-exclamation fa-2x"></i>
     </p>
     </div>
-    <div class="col"  *ngFor="let paciente of pacientes">
-      <div class="card h-100" *ngIf="this.paciente.protocolo.protocoloFinalizado==false">
-        <div class="card-body">
-          <h5 class="card-title">{{paciente.first_name}} {{ paciente.last_name}}</h5>
-          <p class="card-text">Fecha de nacimiento: {{paciente.birthdate}}</p>
-          <!--
-            <p class="card-text">Sexo: {{paciente.sex}}</p>
-            <p class="card-text">Semanas de gestación: {{paciente.pregnancy_period}}</p>
-            <p class="card-text">Peso al nacer: {{paciente.weight}} g</p>
-          -->
-        </div>
-        <div class="card-footer">
-          <button  type="button" (click)="verPaciente(paciente.id)"  class="btn btn-outline-primary">Más información</button>
-          &nbsp;
-          <button  type="button" (click)="editarPaciente(paciente.id)"  class="btn btn-outline-primary">Editar paciente</button>
-          <br><br>
-          <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo</button>
-          <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
-          <!--
-             <button  type="button" (click)="borrarPaciente(paciente.id)"  class="btn btn-outline-danger">Borrar paciente</button>
-          -->
-          &nbsp;
-          
-          <button *ngIf="this.paciente.protocol" type="button" (click)="finalizarProtocolo(paciente.id)"  class="btn btn-outline-danger">Finalizar protocolo</button>
-          <br>
-          <br>
-          
+    <ng-container *ngIf="this._pacientesService.getOrdenacionPredeterminada()">
+      <div class="col"  *ngFor="let paciente of pacientes">
+        <div class="card h-100" *ngIf="this.paciente.protocolo.protocoloFinalizado==false">
+          <div class="card-body">
+            <h5 class="card-title">{{paciente.first_name}} {{ paciente.last_name}}</h5>
+            <p class="card-text">Fecha de nacimiento: {{paciente.birthdate}}</p>
+            <!--
+              <p class="card-text">Sexo: {{paciente.sex}}</p>
+              <p class="card-text">Semanas de gestación: {{paciente.pregnancy_period}}</p>
+              <p class="card-text">Peso al nacer: {{paciente.weight}} g</p>
+            -->
+          </div>
+          <div class="card-footer">
+            <button  type="button" (click)="verPaciente(paciente.id)"  class="btn btn-outline-primary">Más información</button>
+            &nbsp;
+            <button  type="button" (click)="editarPaciente(paciente.id)"  class="btn btn-outline-primary">Editar paciente</button>
+            <br><br>
+            <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo</button>
+            <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
+            <!--
+               <button  type="button" (click)="borrarPaciente(paciente.id)"  class="btn btn-outline-danger">Borrar paciente</button>
+            -->
+            &nbsp;
+            
+            <button *ngIf="this.paciente.protocol" type="button" (click)="finalizarProtocolo(paciente.id)"  class="btn btn-outline-danger">Finalizar protocolo</button>
+            <br>
+            <br>
+            
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
+    
+
+
+    <ng-container *ngIf="this._pacientesService.getOrdenacionNombre()">
+      <div class="col"  *ngFor="let paciente of pacientesOrdenadosNombre">
+        <div class="card h-100" *ngIf="this.paciente.protocolo.protocoloFinalizado==false">
+          <div class="card-body">
+            <h5 class="card-title">{{paciente.first_name}} {{ paciente.last_name}}</h5>
+            <p class="card-text">Fecha de nacimiento: {{paciente.birthdate}}</p>
+            <!--
+              <p class="card-text">Sexo: {{paciente.sex}}</p>
+              <p class="card-text">Semanas de gestación: {{paciente.pregnancy_period}}</p>
+              <p class="card-text">Peso al nacer: {{paciente.weight}} g</p>
+            -->
+          </div>
+          <div class="card-footer">
+            <button  type="button" (click)="verPaciente(paciente.id)"  class="btn btn-outline-primary">Más información</button>
+            &nbsp;
+            <button  type="button" (click)="editarPaciente(paciente.id)"  class="btn btn-outline-primary">Editar paciente</button>
+            <br><br>
+            <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo</button>
+            <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
+            <!--
+               <button  type="button" (click)="borrarPaciente(paciente.id)"  class="btn btn-outline-danger">Borrar paciente</button>
+            -->
+            &nbsp;
+            
+            <button *ngIf="this.paciente.protocol" type="button" (click)="finalizarProtocolo(paciente.id)"  class="btn btn-outline-danger">Finalizar protocolo</button>
+            <br>
+            <br>
+            
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+
+
+
+    <ng-container *ngIf="this._pacientesService.getOrdenacionFecha()">
+      <div class="col"  *ngFor="let paciente of pacientesOrdenadosFecha">
+        <div class="card h-100" *ngIf="this.paciente.protocolo.protocoloFinalizado==false">
+          <div class="card-body">
+            <h5 class="card-title">{{paciente.first_name}} {{ paciente.last_name}}</h5>
+            <p class="card-text">Fecha de nacimiento: {{paciente.birthdate}}</p>
+            <!--
+              <p class="card-text">Sexo: {{paciente.sex}}</p>
+              <p class="card-text">Semanas de gestación: {{paciente.pregnancy_period}}</p>
+              <p class="card-text">Peso al nacer: {{paciente.weight}} g</p>
+            -->
+          </div>
+          <div class="card-footer">
+            <button  type="button" (click)="verPaciente(paciente.id)"  class="btn btn-outline-primary">Más información</button>
+            &nbsp;
+            <button  type="button" (click)="editarPaciente(paciente.id)"  class="btn btn-outline-primary">Editar paciente</button>
+            <br><br>
+            <button *ngIf="!this.paciente.protocol" type="button" (click)="iniciarProtocolo(paciente.id)"  class="btn btn-outline-primary">Iniciar protocolo</button>
+            <button *ngIf="this.paciente.protocol" type="button" (click)="verCalendario(paciente.id)"  class="btn btn-outline-primary">Calendario</button>
+            <!--
+               <button  type="button" (click)="borrarPaciente(paciente.id)"  class="btn btn-outline-danger">Borrar paciente</button>
+            -->
+            &nbsp;
+            
+            <button *ngIf="this.paciente.protocol" type="button" (click)="finalizarProtocolo(paciente.id)"  class="btn btn-outline-danger">Finalizar protocolo</button>
+            <br>
+            <br>
+            
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    
     

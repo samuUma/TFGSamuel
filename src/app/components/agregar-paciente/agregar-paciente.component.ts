@@ -17,6 +17,8 @@ export class AgregarPacienteComponent implements OnInit {
   paciente:paciente;
 
   ngOnInit(): void {
+      this.pacienteService.setOrdenacionFalse()
+      this.pacienteService.setEstadisticasFalse()
       //inicializar el paciente vacio
       this.paciente=new paciente();
       document.getElementById("fecha").setAttribute("min", this.fechaMinima())

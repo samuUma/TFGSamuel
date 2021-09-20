@@ -40,6 +40,8 @@ export class IniciarProtocoloComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    this._pacientesService.setEstadisticasFalse()
+    this._pacientesService.setOrdenacionFalse()
     this.protocolo=new InicioProtocolo();
     //this.cargando=true;
     this._pacientesService.getPacientes2()

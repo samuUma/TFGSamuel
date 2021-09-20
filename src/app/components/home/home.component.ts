@@ -4,6 +4,7 @@ import {NgForm} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { PacientesService } from 'src/app/services/pacientes.service';
 
 @Component({
   selector: 'app-home',
@@ -12,9 +13,11 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   usuario:UsuarioModel
-  constructor(private auth:AuthService,private router:Router) { }
+  constructor(private auth:AuthService,private router:Router,private _pacientesService:PacientesService) { }
 
   ngOnInit(): void {
+    this._pacientesService.setEstadisticasFalse()
+    this._pacientesService.setOrdenacionTrue()
     this.usuario=new UsuarioModel();
   }
   

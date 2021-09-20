@@ -32,6 +32,8 @@ export class PacienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._pacientesService.setEstadisticasFalse()
+    this._pacientesService.setOrdenacionFalse()
     this.paciente=new paciente();
     this.cargando=true;
     this._pacientesService.getPacientes2()

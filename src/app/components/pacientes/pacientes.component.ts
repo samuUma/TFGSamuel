@@ -11,16 +11,19 @@ import Swal from 'sweetalert2';
 export class PacientesComponent implements OnInit {
 
   pacientes:paciente[]=[];
+  pacientesOrdenadosNombre:paciente[]=[];
+  pacientesOrdenadosFecha:paciente[]=[];
   paciente:paciente;
   cargando:boolean=false;
-  
 
-  constructor(private _pacientesService:PacientesService,
+  constructor(public _pacientesService:PacientesService,
               private router:Router) { 
     //console.log("constructor");
   }
 
   ngOnInit(): void {
+    this._pacientesService.setEstadisticasFalse()
+    this._pacientesService.setOrdenacionTrue()
     this.cargando=true;
     this._pacientesService.getPacientes2()
     .subscribe( resp => {
@@ -30,14 +33,38 @@ export class PacientesComponent implements OnInit {
           this.pacientes.push(p)
         }
       }
+
+      this.pacientesOrdenadosNombre=this.pacientes.slice()
+      // pacientes ordenados por nombre
+      this.pacientesOrdenadosNombre.sort((a,b) => (a.first_name.toLowerCase() > b.first_name.toLowerCase()) ? 1 : ((b.first_name.toLowerCase() > a.first_name.toLowerCase()) ? -1 : 0))
+      
+      // pacientes ordenados por fecha
+      this.pacientesOrdenadosFecha=this.pacientes.slice();
+      this.pacientesOrdenadosFecha.sort((a,b) => 
+      (a.birthdate > b.birthdate) ? 1 : ((b.birthdate > a.birthdate) ? -1 : 0))
+
       this.cargando=false;
-      for(var pa of this.pacientes){
-        console.log('nombre:',pa.first_name,'protocolo:',pa.protocol)
-      }
+      
+      console.log('normal:',this.pacientes)
+      console.log('por nombre:',this.pacientesOrdenadosNombre)
+      console.log('por fecha;',this.pacientesOrdenadosFecha)
+      
     });
     
   
   }
+
+getOrdenacionFecha(){
+  return this._pacientesService.getOrdenacionFecha()
+}
+
+getOrdenacionNombre(){
+  return this._pacientesService.getOrdenacionNombre()
+}
+
+getOrdenacionPredeterminada(){
+  return this._pacientesService.getOrdenacionPredeterminada()
+}
 
 verPaciente(idx:string): void{
     this.router.navigate(['/paciente',idx]);
@@ -46,7 +73,6 @@ verPaciente(idx:string): void{
 editarPaciente(idx:string): void{
     this.router.navigate(['/editarPaciente',idx]);
 }
-
 
 mostrarCargando(){
   while(this.cargando==true){
@@ -57,6 +83,11 @@ mostrarCargando(){
 }
 
 finalizarProtocolo(idx:string): void{
+  for(var p of this.pacientes){
+    if(p.id==idx){
+      this.paciente=p;
+    }
+  }
   Swal.fire({
     title: '¿Finalizar protocolo alimenticio del paciente?',
     showCancelButton: true,
@@ -95,13 +126,8 @@ finalizarProtocolo(idx:string): void{
     }
   }).then(
     resp =>{
-      for(var p of this.pacientes){
-        if(p.id==idx){
-          this.paciente=p;
-        }
-      }
-      console.log(resp)
-      this.paciente.protocolo.protocoloFinalizado=true;
+      
+      //console.log(resp)
       if(resp.value['swal1']==true){
         this.paciente.protocolo.protocoloFinalizadoBien=true;
       }
@@ -111,13 +137,13 @@ finalizarProtocolo(idx:string): void{
       if(resp.value['swal3']==true){
         this.paciente.protocolo.protocoloFinalizadoOtro=true;
       }
+      this.paciente.protocolo.protocoloFinalizado=true;
       this._pacientesService.actualizarPaciente(this.paciente)
         .subscribe(resp => {
-          this.ngOnInit()
-          this.router.navigate(['/pacientes']);
-          Swal.fire({title:'Datos actualizados',icon:'info'});
         });
-      
+      this.router.navigateByUrl('/pacientes');
+      this.ngOnInit()
+      Swal.fire({title:'Datos actualizados',icon:'info'});
     }
   )
 }

@@ -68,6 +68,8 @@ export class EstadisticasComponent implements OnInit {
   }
 
   cargarDatos(){
+    this._pacientesService.setEstadisticasTrue()
+    this._pacientesService.setOrdenacionFalse()
     this.cargando=true;
     this._pacientesService.getPacientes2()
     .subscribe(resp => {

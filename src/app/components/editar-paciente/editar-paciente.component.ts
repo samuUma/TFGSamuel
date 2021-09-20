@@ -28,6 +28,8 @@ export class EditarPacienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._pacientesService.setEstadisticasFalse()
+    this._pacientesService.setOrdenacionFalse()
     this.cargando=true;
     this._pacientesService.getPacientes2()
     .subscribe(resp => {

@@ -135,6 +135,8 @@ export class CalendarioComponent implements OnInit{
 
   //arrancamos la pagina
   ngOnInit(): void {
+    this._pacientesService.setEstadisticasFalse()
+    this._pacientesService.setOrdenacionFalse()
      this.cargarDatos()
   
   }
@@ -384,6 +386,7 @@ export class CalendarioComponent implements OnInit{
     return cantidad;
   }
 
+  
   //convertir la fecha de inicio del protocolo del paciente en el formato del calendario
   devolverFecha(fecha:string){
     var FechaArr=fecha.split('/')
@@ -521,9 +524,19 @@ export class CalendarioComponent implements OnInit{
           // cambiar el color a gris de los eventos terminados
           info.el.style.color='grey'
         }
-        if(info.event.start.getDate()-1>(new Date().getDate())){
+        if(info.event.start.getDate()-1>((new Date()).getDate())){
           info.el.style.display='none'
         }
+        if(info.event.title=="Fin Alimentación enteral trófica" && info.event.start>(new Date())){
+          info.el.style.display='none'
+        }
+        if(info.event.title=="Inicio Alimentación enteral completa" && info.event.start>(new Date())){
+          info.el.style.display='none'
+        }
+        if(info.event.title=="Fin Alimentación enteral completa" && info.event.start>(new Date())){
+          info.el.style.display='none'
+        }
+
       },
       // mostrar el nombre completo del dia de la semana
       dayHeaderFormat: { weekday: 'long' },

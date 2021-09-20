@@ -11,12 +11,12 @@
         &nbsp;
         &nbsp;
         <li class="nav-item" routerLinkActive="active">
-          <a class="btn btn-outline-light" type="button" id="estadisticas" [routerLink]="['pacientesInactivos']" (click)="cambiarColor()">Pacientes Inactivos</a>
+          <a class="btn btn-outline-light" type="button" id="pacientesInactivos" [routerLink]="['pacientesInactivos']" (click)="cambiarColor()">Pacientes Inactivos</a>
         </li>
         &nbsp;
         &nbsp;  
         <li class="nav-item" routerLinkActive="active">
-          <a class="btn btn-outline-light" type="button" id="estadisticas" [routerLink]="['estadisticas']" (click)="cambiarColor(); dynamicDownloadJson()">Estadísticas</a>
+          <a class="btn btn-outline-light" type="button" id="estadisticas" [routerLink]="['estadisticas']" (click)="cambiarColor()">Estadísticas</a>
         </li>
         &nbsp;
         &nbsp;
@@ -30,6 +30,37 @@
           <button (click)="cerrarSesion(); cambiarColor()" id="cerrarSesion" class="btn btn-outline-danger"
             type="button">Cerrar Sesión</button>
         </li>
+        &nbsp;
+        &nbsp;
+        <li class="nav-item" routerLinkActive="active" *ngIf="this._pacientesService.getOrdenacion()==true">
+          <!-- desplegable -->
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+            id="ordenar" data-bs-toggle="dropdown">Ordenar</button>
+            <ul class="dropdown-menu" aria-labelledby="ordenar">
+              <li><button class="dropdown-item" (click)="ordenarPredeterminado(); mantenerColor()">Predeterminado</button></li>
+              <li><button class="dropdown-item" (click)="ordenarNombre(); mantenerColor()">Nombre</button></li>
+              <li><button class="dropdown-item" (click)="ordenarFecha(); mantenerColor()">Fecha de nacimiento</button></li>
+            </ul>
+          </div>
+        </li>
+        &nbsp;
+        &nbsp;
+        <li class="nav-item" routerLinkActive="active" *ngIf="this._pacientesService.getEstadisticas()==true">
+          <!-- desplegable -->
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+            id="descargar" data-bs-toggle="dropdown">Descargar</button>
+            <ul class="dropdown-menu" aria-labelledby="descargar">
+              <li><button class="dropdown-item" (click)="dynamicDownloadJson()">Json</button></li>
+              <!--
+                <li><button class="dropdown-item" (click)="descargarCSV()">CSV</button></li>
+              -->
+              
+            </ul>
+          </div>
+        </li>
+        
       </ul>
     </div>
   </div>
